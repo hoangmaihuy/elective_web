@@ -2,6 +2,8 @@ FROM node:10.19.0-alpine
 
 WORKDIR /app
 
+ENV REACT_APP_ENV $REACT_APP_ENV
+
 # Copy code
 COPY . .
 # Install node modules
