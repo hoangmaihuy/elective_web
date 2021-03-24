@@ -3,7 +3,7 @@ import {
   Switch, Route, Link
 } from "react-router-dom";
 
-import Test from "./components/Test"
+import Echo from "./components/Echo"
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Switch>
 
         <Route path="/test/hello">
-					<Test />
+					<Echo message="Hello World"/>
         </Route>
 
         <Route path="/">

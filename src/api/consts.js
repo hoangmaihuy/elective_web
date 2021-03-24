@@ -1,6 +1,6 @@
 const Environment = {
 	DEV: "development",
-	TEST: "testing",
+	TEST: "test",
 	LIVE: "production"
 };
 
@@ -24,6 +24,8 @@ switch (ENVIRONMENT) {
 		TUIKE_WEB_HOST = "https://tuike.herokuapp.com"
 		break;
 }
+
+export const TuikeApiHost = TUIKE_API_HOST;
 
 export const TuikeApi = {
 	TEST_ECHO : TUIKE_API_HOST + "/test/echo",

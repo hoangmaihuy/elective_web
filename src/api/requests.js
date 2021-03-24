@@ -1,10 +1,10 @@
 import {TuikeApi, TuikeApiHost} from "./consts"
 import axios from "axios";
 
-const TIMEOUT = 5000;
+const TIMEOUT = 10000;
 
 export async function requestTuikeApi(url, data) {
-	console.log("Request TuikeAPI|url=", url, "data=", data);
+	console.log("Request TuikeAPI|url=" + url + ",data=", data);
 	return await axios({
 		url: url,
 		method: 'post',
