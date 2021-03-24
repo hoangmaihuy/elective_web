@@ -33,6 +33,6 @@ jobs:
           heroku_email: "pynhp9x@gmail.com"
           usedocker: true
           docker_build_args: |
-            REACT_APP_ENV
+            APP_ENV
         env:
-          REACT_APP_ENV: production
+          APP_ENV: production
