@@ -32,5 +32,7 @@ jobs:
           heroku_app_name: "tuike"
           heroku_email: "pynhp9x@gmail.com"
           usedocker: true
+          docker_build_args: |
+            REACT_APP_ENV
         env:
           REACT_APP_ENV: production

@@ -23,7 +23,8 @@ export default function Echo(props) {
 
 	return (
 		<div>
-			{loading || <h1 data-testid="message">{message}</h1>}
+			{loading && <h1>Sending "Hello World" to /echo/test... </h1>}
+			{loading || <h1 data-testid="message">Server says: {message}</h1>}
 		</div>
 	)
 }
