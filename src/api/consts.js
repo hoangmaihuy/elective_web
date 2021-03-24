@@ -4,7 +4,9 @@ const Environment = {
 	LIVE: "production"
 };
 
-const ENVIRONMENT = process.env.NODE_ENV;
+console.log(process.env);
+const ENVIRONMENT = process.env.REACT_APP_ENV || Environment.DEV;
+
 console.log("Environment=" + ENVIRONMENT);
 
 let TUIKE_API_HOST = "";
