@@ -1,4 +1,4 @@
-name: Build Echo
+name: Build Test
 
 on:
   push:
