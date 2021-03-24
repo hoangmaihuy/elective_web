@@ -22,7 +22,7 @@ jobs:
       - name: Install node_modules
         run: npm install
 
-      - name: Run Echo
+      - name: Run Test
         run: npm test
         env:
           NODE_ENV: test

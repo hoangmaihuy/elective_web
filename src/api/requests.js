@@ -4,7 +4,7 @@ import axios from "axios";
 const TIMEOUT = 10000;
 
 export async function requestTuikeApi(url, data) {
-	console.log("Request TuikeAPI|url=" + url + ",data=", data);
+	//console.log("Request TuikeAPI|url=" + url + ",data=", data);
 	return await axios({
 		url: url,
 		method: 'post',
