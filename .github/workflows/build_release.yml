@@ -20,8 +20,10 @@ jobs:
           node-version: '14'
       - name: Install node_modules
         run: npm install
-      - name: Run Test
+      - name: Run Echo
         run: npm test
+        env:
+          NODE_ENV: production
 
       - name: Deploy Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -30,5 +32,3 @@ jobs:
           heroku_app_name: "tuike"
           heroku_email: "pynhp9x@gmail.com"
           usedocker: true
-        env:
-          ENVIRONMENT: LIVE
