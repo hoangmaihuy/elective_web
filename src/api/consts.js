@@ -4,7 +4,6 @@ const Environment = {
 	LIVE: "production"
 };
 
-console.log(process.env);
 const ENVIRONMENT = process.env.REACT_APP_ENV || Environment.DEV;
 
 console.log("Environment=" + ENVIRONMENT);

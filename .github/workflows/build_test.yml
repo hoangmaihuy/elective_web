@@ -34,4 +34,6 @@ jobs:
           heroku_app_name: "tuike-test"
           heroku_email: "pynhp9x@gmail.com"
           usedocker: true
+        env:
+          REACT_APP_ENV: test
 
