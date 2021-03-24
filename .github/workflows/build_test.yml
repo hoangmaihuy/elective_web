@@ -24,6 +24,8 @@ jobs:
 
       - name: Run Test
         run: npm test
+        env:
+          REACT_APP_ENV: test
 
       - name: Deploy Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -32,5 +34,8 @@ jobs:
           heroku_app_name: "tuike-test"
           heroku_email: "pynhp9x@gmail.com"
           usedocker: true
+          docker_build_args: |
+            APP_ENV
         env:
-          ENVIRONMENT: TEST
+          APP_ENV: test
+
