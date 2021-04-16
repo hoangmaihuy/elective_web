@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 
 import Echo from "./components/Echo"
+import LoginPage from "./pages/LoginPage"
 
 function App() {
   return (
@@ -14,9 +15,14 @@ function App() {
 					<Echo message="Hello World"/>
         </Route>
 
+        <Route path="/login">
+          <LoginPage/>
+        </Route>
+
         <Route path="/">
           <h1>Home</h1>
         </Route>
+
       </Switch>
     </div>
   );
