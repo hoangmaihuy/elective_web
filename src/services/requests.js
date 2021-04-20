@@ -1,5 +1,5 @@
 import {TuikeApi, TuikeApiHost, Result} from "./consts"
-import request from '@/utils/request';
+import request from 'umi-request';
 
 const TIMEOUT = 5000;
 

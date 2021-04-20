@@ -2,7 +2,7 @@ import {
   MailOutlined,
   LockOutlined,
 } from '@ant-design/icons';
-import { Alert, Space, message, Tabs, Result } from 'antd';
+import { Alert, message } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { useIntl, connect, FormattedMessage } from 'umi';

@@ -7,3 +7,10 @@ export async function requestVerificationCode(email) {
     email: email
   });
 }
+
+export async function login(email, verification_code) {
+  return requestTuikeApi(TuikeAccountApi.LOGIN, {
+    email,
+    verification_code,
+  })
+}

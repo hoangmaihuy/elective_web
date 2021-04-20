@@ -1,9 +1,12 @@
 import { stringify } from 'querystring';
 import { history } from 'umi';
-import { fakeAccountLogin } from '@/services/login';
+import { login } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
+import {Result as ApiResult} from '@/services/consts'
+import getErrorMessage from '@/services/error'
+
 const Model = {
   namespace: 'login',
   state: {
@@ -11,15 +14,19 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const {result, reply} = yield call(login, payload.email, payload.captcha);
+      console.log(result, reply);
+      if (result !== ApiResult.SUCCESS) {
+        message.error(getErrorMessage(result));
+        return;
+      }
       yield put({
         type: 'changeLoginStatus',
-        payload: response,
+        payload: reply,
       }); // Login successfully
 
-      if (response.status === 'ok') {
+      if (result === ApiResult.SUCCESS) {
         const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
         message.success('🎉 🎉 🎉  登录成功！');
         let { redirect } = params;
 
@@ -61,7 +68,7 @@ const Model = {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      setAuthority(payload.access_token);
       return { ...state, status: payload.status, type: payload.type };
     },
   },
