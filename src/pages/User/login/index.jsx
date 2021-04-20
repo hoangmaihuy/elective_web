@@ -2,7 +2,7 @@ import {
   MailOutlined,
   LockOutlined,
 } from '@ant-design/icons';
-import { Alert, message } from 'antd';
+import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { useIntl, connect, FormattedMessage } from 'umi';
@@ -56,6 +56,15 @@ const Login = (props) => {
           return Promise.resolve();
         }}
       >
+        <Tabs activeKey={type} onChange={setType}>
+          <Tabs.TabPane
+            key="email"
+            tab={intl.formatMessage({
+              id: 'pages.login.emailLogin.tab',
+              defaultMessage: '邮箱登录',
+            })}
+          />
+        </Tabs>
         {status === 'error' && loginType === 'email' && !submitting && (
           <LoginMessage content="验证码错误" />
         )}
