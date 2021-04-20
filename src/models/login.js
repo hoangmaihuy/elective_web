@@ -27,6 +27,7 @@ const Model = {
 
       if (result === ApiResult.SUCCESS) {
         const urlParams = new URL(window.location.href);
+        const params = getPageQuery()
         message.success('🎉 🎉 🎉  登录成功！');
         let { redirect } = params;
 
