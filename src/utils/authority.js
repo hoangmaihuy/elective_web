@@ -31,3 +31,11 @@ export function setAuthority(authority) {
 
   reloadAuthorized();
 }
+
+export function setToken(token) {
+  localStorage.setItem('tuike-access-token', token);
+}
+
+export function getToken() {
+  return localStorage.getItem('tuike-access-token');
+}

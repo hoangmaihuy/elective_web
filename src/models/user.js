@@ -1,23 +1,22 @@
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { getUserInfo } from '@/services/user';
+import {Result as ApiResult} from "@/services/consts";
+import {message} from "antd";
+import getErrorMessage from "@/services/error";
 const UserModel = {
   namespace: 'user',
   state: {
     currentUser: {},
   },
   effects: {
-    *fetch(_, { call, put }) {
-      const response = yield call(queryUsers);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-    },
-
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+      const {result, reply} = yield call(getUserInfo);
+      if (result !== ApiResult.SUCCESS) {
+        message.error(getErrorMessage(result));
+        return;
+      }
       yield put({
         type: 'saveCurrentUser',
-        payload: response,
+        payload: reply,
       });
     },
   },
