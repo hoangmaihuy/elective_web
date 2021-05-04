@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { history } from 'umi';
 import { login } from '@/services/login';
-import { setToken } from '@/utils/authority';
+import { setToken, setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
 import {Result as ApiResult} from '@/services/consts'
@@ -70,9 +70,9 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       console.log("changeLoginStatus, payload=", payload);
-      //setAuthority(payload.access_token);
+      setAuthority(payload.authority);
       setToken(payload.access_token);
-      return { ...state, status: payload.status, type: payload.type };
+      return { ...state, status: 'ok' };
     },
   },
 };
