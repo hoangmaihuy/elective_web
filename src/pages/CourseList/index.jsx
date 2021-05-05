@@ -58,7 +58,7 @@ const CourseList = () => {
         search={{
           labelWidth: 120,
         }}
-        request={(params, sorter, filter) => getCourseList({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => getCourseList({ ...params, sorter})}
         columns={columns}
       />
 
