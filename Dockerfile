@@ -16,4 +16,4 @@ RUN npm run build
 # Install serve
 RUN npm install -g serve
 
-CMD serve -s build -l $PORT
+CMD serve -s dist -l $PORT
