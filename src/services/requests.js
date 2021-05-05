@@ -2,7 +2,7 @@ import {TuikeApi, TuikeApiHost, Result} from "./consts"
 import {getToken} from '@/utils/authority';
 import request from 'umi-request';
 
-const TIMEOUT = 5000;
+const TIMEOUT = 10000;
 
 export async function postTuikeApi(url, data) {
   const token = getToken();
