@@ -4,7 +4,7 @@ WORKDIR /app
 
 ARG APP_ENV
 
-ENV REACT_APP_ENV $APP_ENV
+ENV UMI_ENV $APP_ENV
 
 # Copy code
 COPY . .
