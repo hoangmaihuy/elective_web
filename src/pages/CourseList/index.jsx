@@ -39,7 +39,30 @@ const CourseList = () => {
       title: '开课单位',
       dataIndex: 'school_id',
       valueEnum: SchoolList,
-      filter: true,
+    },
+    {
+      title: '推荐分',
+      dataIndex: 'recommend_score',
+      sorter: true,
+      hideInSearch: true,
+    },
+    {
+      title: '课程内容',
+      dataIndex: 'content_score',
+      sorter: true,
+      hideInSearch: true,
+    },
+    {
+      title: '任务量',
+      dataIndex: 'work_score',
+      sorter: true,
+      hideInSearch: true,
+    },
+    {
+      title: '考核',
+      dataIndex: 'exam_score',
+      sorter: true,
+      hideInSearch: true,
     },
     {
       title: '测评次数',

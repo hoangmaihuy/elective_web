@@ -42,13 +42,12 @@ export async function getCourseList(params) {
   if (params.school_id)
     data.school_id = parseInt(params.school_id, 10);
 
-  data.order_by = []
   if (params.sorter) {
     Object.entries(params.sorter).forEach(([key, value]) => {
       if (value === 'ascend')
-        data.order_by.push(key);
+        data.order_by = key;
       else
-        data.order_by.push(`-${key}`);
+        data.order_by = `-${key}`;
     })
   }
 
