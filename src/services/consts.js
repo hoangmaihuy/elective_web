@@ -12,6 +12,11 @@ export const TuikeAccountApi = {
 	GET_USER_INFO : ACCOUNT_API_HOST + "/get_user_info",
 }
 
+const COURSE_API_HOST = TUIKE_API_HOST + "/course";
+export const TuikeCourseApi = {
+  GET_COURSE_LIST : COURSE_API_HOST + "/get_course_list",
+}
+
 export const Result = {
 	SUCCESS: "success",
 	ERROR_PARAMS: "error_params",
