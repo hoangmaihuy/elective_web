@@ -46,19 +46,6 @@ const GlobalHeaderRight = (props) => {
         //   //console.log('input', value);
         // }}
       />
-      <Tooltip title="使用文档">
-        <a
-          style={{
-            color: 'inherit',
-          }}
-          target="_blank"
-          href="https://pro.ant.design/docs/getting-started"
-          rel="noopener noreferrer"
-          className={styles.action}
-        >
-          <QuestionCircleOutlined />
-        </a>
-      </Tooltip>
       <Avatar />
       {REACT_APP_ENV && (
         <span>

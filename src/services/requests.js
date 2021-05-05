@@ -9,7 +9,7 @@ export async function postTuikeApi(url, data) {
   let headers = {}
   if (token)
     headers.Authorization = `Bearer ${token}`;
-	console.log(`postTuikeApi|url=${url}, headers=${headers}, data=${data}`);
+	console.log("postTuikeApi|url=", url, ",headers=", headers, ",data=", data);
 	return request.post(url, {
 		timeout: TIMEOUT,
 		credentials: 'omit',

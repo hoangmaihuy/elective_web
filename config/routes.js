@@ -50,10 +50,10 @@ export default [
                 ],
               },
               {
-                name: 'list.table-list',
+                name: '课程列表',
                 icon: 'table',
-                path: '/list',
-                component: './TableList',
+                path: '/courses',
+                component: './CourseList'
               },
               {
                 component: './404',
