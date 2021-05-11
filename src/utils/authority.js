@@ -1,8 +1,11 @@
 import { reloadAuthorized } from './Authorized'; // use localStorage to store the authority info, which might be sent from server in actual project.
 
+const AccessTokenKey = 'tuike-access-token';
+const AuthorityKey = 'tuike-authority';
+
 export function getAuthority(str) {
   const authorityString =
-    typeof str === 'undefined' && localStorage ? localStorage.getItem('antd-pro-authority') : str; // authorityString could be admin, "admin", ["admin"]
+    typeof str === 'undefined' && localStorage ? localStorage.getItem(AuthorityKey) : str; // authorityString could be admin, "admin", ["admin"]
 
   let authority;
 
@@ -27,15 +30,24 @@ export function getAuthority(str) {
 }
 export function setAuthority(authority) {
   const proAuthority = typeof authority === 'string' ? [authority] : authority;
-  localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority)); // auto reload
+  localStorage.setItem(AuthorityKey, proAuthority); // auto reload
 
   reloadAuthorized();
 }
 
+export function removeAuthority() {
+  localStorage.removeItem(AuthorityKey);
+  reloadAuthorized();
+}
+
 export function setToken(token) {
-  localStorage.setItem('tuike-access-token', token);
+  localStorage.setItem(AccessTokenKey, token);
 }
 
 export function getToken() {
-  return localStorage.getItem('tuike-access-token');
+  return localStorage.getItem(AccessTokenKey);
+}
+
+export function deleteToken() {
+  localStorage.removeItem(AccessTokenKey);
 }
