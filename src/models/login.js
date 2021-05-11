@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { history } from 'umi';
 import { login } from '@/services/login';
-import { setToken, setAuthority } from '@/utils/authority';
+import {setToken, deleteToken, setAuthority, removeAuthority} from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
 import {Result as ApiResult} from '@/services/consts'
@@ -54,8 +54,11 @@ const Model = {
       }
     },
 
-    logout() {
+    *logout({ payload }, { put }) {
       const { redirect } = getPageQuery(); // Note: There may be security issues, please note
+      yield put({
+        type: 'removeLoginStatus'
+      })
 
       if (window.location.pathname !== '/user/login' && !redirect) {
         history.replace({
@@ -69,11 +72,18 @@ const Model = {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      console.log("changeLoginStatus, payload=", payload);
       setAuthority(payload.authority);
       setToken(payload.access_token);
       return { ...state, status: 'ok' };
     },
+
+    removeLoginStatus() {
+      removeAuthority();
+      deleteToken();
+      return {
+        status: undefined
+      }
+    }
   },
 };
 export default Model;

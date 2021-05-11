@@ -45,7 +45,6 @@ export async function getTuikeApi(url, params) {
       return response;
     })
     .catch((error) => {
-      console.log(error);
       return {
         "result": Result.ERROR_REQUEST,
       }
