@@ -63,7 +63,6 @@ const Model = {
     },
 
     saveTeacherList(state, {payload}) {
-      console.log("saveTeacherList", payload);
       return {...state, teacherList: payload, hasTeacherList: true}
     }
   },

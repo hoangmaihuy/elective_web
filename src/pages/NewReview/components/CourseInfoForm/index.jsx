@@ -4,7 +4,7 @@ import { connect } from 'umi';
 import styles from './index.less';
 import SchoolList from "@/consts/school";
 
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 const { TreeNode } = TreeSelect;
 const formItemLayout = {
   labelCol: {
@@ -16,7 +16,6 @@ const formItemLayout = {
 };
 
 const CourseInfoForm = (props) => {
-  console.log(props);
   const { dispatch, data, courseList, teacherList } = props;
   const [form] = Form.useForm();
 
@@ -62,10 +61,6 @@ const CourseInfoForm = (props) => {
   }
 
   const renderTeacherSelect = () => {
-    console.log("renderTeacherSelect", teacherList);
-    if (!teacherList) {
-      return <Select />
-    }
     return (
       <Select
         showSearch
@@ -136,32 +131,26 @@ const CourseInfoForm = (props) => {
           {renderTeacherSelect()}
         </Form.Item>
         <Form.Item
-          label="收款人姓名"
-          name="receiverName"
+          label="学期"
+          name="semester"
           rules={[
             {
               required: true,
-              message: '请输入收款人姓名',
+              message: '请选择学期',
             },
           ]}
         >
-          <Input placeholder="请输入收款人姓名" />
-        </Form.Item>
-        <Form.Item
-          label="转账金额"
-          name="amount"
-          rules={[
-            {
-              required: true,
-              message: '请输入转账金额',
-            },
-            {
-              pattern: /^(\d+)((?:\.\d+)?)$/,
-              message: '请输入合法金额数字',
-            },
-          ]}
-        >
-          <Input prefix="￥" placeholder="请输入金额" />
+          <Select placeholder={"请选择学期"}>
+            <OptGroup label="2020-2021年">
+              <Option value={"20-21-1"}>20-21 秋期</Option>
+              <Option value={"20-21-2"}>20-21 春期</Option>
+            </OptGroup>
+            <OptGroup label="2019-2020年">
+              <Option value={"19-20-1"}>19-20 秋期</Option>
+              <Option value={"19-20-2"}>21-21 春期</Option>
+              <Option value={"19-20-3"}>19-20 暑期</Option>
+            </OptGroup>
+          </Select>
         </Form.Item>
         <Form.Item
           wrapperCol={{
