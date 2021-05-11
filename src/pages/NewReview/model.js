@@ -2,19 +2,14 @@ import { fakeSubmitForm, getCoursesBySchool, getTeacherList } from './service';
 import {Result} from '@/services/consts';
 
 const Model = {
-  namespace: 'newReviewForm',
+  namespace: 'addReviewForm',
   state: {
     current: 'courseInfo',
     hasCourseList: false,
     courseList: [],
     hasTeacherList: false,
     teacherList: [],
-    step: {
-      payAccount: 'ant-design@alipay.com',
-      receiverAccount: 'test@example.com',
-      receiverName: 'Alex',
-      amount: '500',
-    },
+    formData: {},
   },
   effects: {
     *fetchCourseList({payload}, {call, put}) {
@@ -37,25 +32,27 @@ const Model = {
       }
     },
 
-    *submitStepForm({ payload }, { call, put }) {
+    *submitForm({ payload }, { call, put }) {
+      console.log("submitForm", payload);
       yield call(fakeSubmitForm, payload);
       yield put({
         type: 'saveStepFormData',
         payload,
       });
       yield put({
-        type: 'saveCurrentStep',
+        type: 'switchStep',
         payload: 'result',
       });
     },
   },
   reducers: {
-    saveCurrentStep(state, { payload }) {
+    switchStep(state, { payload }) {
+      console.log(payload);
       return { ...state, current: payload };
     },
 
     saveStepFormData(state, { payload }) {
-      return { ...state, step: { ...state.step, ...payload } };
+      return { ...state, formData: { ...state.formData, ...payload } };
     },
 
     saveCourseList(state, { payload }) {

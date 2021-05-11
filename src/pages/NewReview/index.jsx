@@ -3,11 +3,18 @@ import { Card, Steps } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { connect } from 'umi';
 import CourseInfoForm from './components/CourseInfoForm';
+import ReviewForm from './components/ReviewForm';
 import styles from './style.less';
 const { Step } = Steps;
 
 const getCurrentStepAndComponent = (current) => {
   switch (current) {
+    case 'review':
+      return {
+        step: 1,
+        component: <ReviewForm />
+      }
+
     case 'courseInfo':
     default:
       return {
@@ -32,7 +39,6 @@ const AddReviewForm = ({ current }) => {
           <Steps current={currentStep} className={styles.steps}>
             <Step title="课程信息" />
             <Step title="测评内容" />
-            <Step title="测评分数" />
             <Step title="完成" />
           </Steps>
           {stepComponent}
@@ -42,6 +48,6 @@ const AddReviewForm = ({ current }) => {
   );
 };
 
-export default connect(({ newReviewForm }) => ({
-  current: newReviewForm.current,
+export default connect(({ addReviewForm }) => ({
+  current: addReviewForm.current,
 }))(AddReviewForm);

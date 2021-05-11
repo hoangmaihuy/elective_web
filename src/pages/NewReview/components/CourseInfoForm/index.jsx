@@ -22,7 +22,7 @@ const CourseInfoForm = (props) => {
   useEffect(() => {
     if (dispatch) {
       dispatch({
-        type: 'newReviewForm/fetchCourseList'
+        type: 'addReviewForm/fetchCourseList'
       });
     }
   }, [props.hasCourseList])
@@ -30,13 +30,13 @@ const CourseInfoForm = (props) => {
   useEffect(() => {
     if (dispatch) {
       dispatch({
-        type: 'newReviewForm/fetchTeacherList'
+        type: 'addReviewForm/fetchTeacherList'
       })
     }
   }, [props.hasTeacherList])
 
   const renderCourseSelect = () => {
-    let treeNodes = [];
+    const treeNodes = [];
     for (const schoolId in courseList) {
       const schoolName = SchoolList[schoolId];
       const courses = courseList[schoolId];
@@ -76,23 +76,25 @@ const CourseInfoForm = (props) => {
     )
   }
 
-  if (!data) {
-    return null;
-  }
-
   const { validateFields } = form;
 
   const onValidateForm = async () => {
     const values = await validateFields();
+    const courseId = parseInt(values.courseName.split("_")[0], 10);
+    const teacherId = parseInt(values.teacherName.split("_")[0], 10);
 
     if (dispatch) {
       dispatch({
-        type: 'newReviewForm/saveStepFormData',
-        payload: values,
+        type: 'addReviewForm/saveStepFormData',
+        payload: {
+          courseId,
+          teacherId,
+          semester: values.semester,
+        },
       });
       dispatch({
-        type: 'newReviewForm/saveCurrentStep',
-        payload: 'confirm',
+        type: 'addReviewForm/switchStep',
+        payload: 'review',
       });
     }
   };
@@ -125,7 +127,8 @@ const CourseInfoForm = (props) => {
           rules={[
             {
               required: true,
-              message: '请选择老师'            }
+              message: '请选择老师'
+            }
           ]}
         >
           {renderTeacherSelect()}
@@ -174,25 +177,14 @@ const CourseInfoForm = (props) => {
           margin: '40px 0 24px',
         }}
       />
-      <div className={styles.desc}>
-        <h3>说明</h3>
-        <h4>转账到支付宝账户</h4>
-        <p>
-          如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
-        </p>
-        <h4>转账到银行卡</h4>
-        <p>
-          如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
-        </p>
-      </div>
     </>
   );
 };
 
-export default connect(({ newReviewForm }) => ({
-  data: newReviewForm.step,
-  hasCourseList: newReviewForm.hasCourseList,
-  courseList: newReviewForm.courseList,
-  hasTeacherList: newReviewForm.hasTeacherList,
-  teacherList: newReviewForm.teacherList,
+export default connect(({ addReviewForm }) => ({
+  data: addReviewForm.formData,
+  hasCourseList: addReviewForm.hasCourseList,
+  courseList: addReviewForm.courseList,
+  hasTeacherList: addReviewForm.hasTeacherList,
+  teacherList: addReviewForm.teacherList,
 }))(CourseInfoForm);
