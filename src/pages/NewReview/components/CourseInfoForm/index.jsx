@@ -1,8 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Form, Button, Divider, Input, Select, TreeSelect } from 'antd';
 import { connect } from 'umi';
 import styles from './index.less';
+import SchoolList from "@/consts/school";
+
 const { Option } = Select;
+const { TreeNode } = TreeSelect;
 const formItemLayout = {
   labelCol: {
     span: 5,
@@ -14,6 +17,7 @@ const formItemLayout = {
 
 const CourseInfoForm = (props) => {
   const { dispatch, data } = props;
+  const [courseTreeSelect, setCourseTreeSelect] = useState(<TreeSelect showSearch/>)
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -22,7 +26,34 @@ const CourseInfoForm = (props) => {
         type: 'newReviewForm/fetchCourseList'
       });
     }
-  }, [props.hasCourseList])
+  }, [dispatch, props.hasCourseList])
+
+  useEffect(() => {
+    const {courseList} = props;
+    let treeNodes = [];
+    for (const schoolId in courseList) {
+      const schoolName = SchoolList[schoolId];
+      const courses = courseList[schoolId];
+      treeNodes.push(
+        <TreeNode key={`school_${schoolId}`} selectable={false} title={schoolName} >
+          {courses.map((course) => (
+            <TreeNode
+              value={`${course.id}_${course.name}`}
+              isLeaf={true}
+              title={`${course.name} （${course.credit} 学分）`}
+            >
+            </TreeNode>
+          ))}
+        </TreeNode>
+      )
+    }
+    setCourseTreeSelect(
+      <TreeSelect showSearch allowClear placeholder="请选择课程">
+        {treeNodes}
+      </TreeSelect>
+    );
+
+  }, [props.courseList])
 
   if (!data) {
     return null;
@@ -65,11 +96,7 @@ const CourseInfoForm = (props) => {
             },
           ]}
         >
-          <TreeSelect
-            showSearch
-
-          >
-          </TreeSelect>
+          {courseTreeSelect}
         </Form.Item>
         <Form.Item label="收款账户">
           <Input.Group compact>
