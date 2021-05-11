@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import {Link} from "umi";
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { getCourseList } from './service';
@@ -22,6 +23,11 @@ const CourseList = () => {
     {
       title: '课程名',
       dataIndex: 'name',
+      render: (text, record, index) => {
+        return (
+          <Link to={`/course/${index}`}>{text}</Link>
+        )
+      },
     },
     {
       title: '课程类型',
