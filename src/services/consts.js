@@ -15,6 +15,7 @@ export const TuikeAccountApi = {
 const COURSE_API_HOST = TUIKE_API_HOST + "/course";
 export const TuikeCourseApi = {
   GET_COURSE_LIST : COURSE_API_HOST + "/get_course_list",
+  GET_COURSES_BY_SCHOOL : COURSE_API_HOST + "/get_courses_by_school",
 }
 
 export const Result = {
