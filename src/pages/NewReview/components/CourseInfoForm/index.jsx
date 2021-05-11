@@ -16,8 +16,8 @@ const formItemLayout = {
 };
 
 const CourseInfoForm = (props) => {
-  const { dispatch, data } = props;
-  const [courseTreeSelect, setCourseTreeSelect] = useState(<TreeSelect showSearch/>)
+  console.log(props);
+  const { dispatch, data, courseList, teacherList } = props;
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -26,10 +26,17 @@ const CourseInfoForm = (props) => {
         type: 'newReviewForm/fetchCourseList'
       });
     }
-  }, [dispatch, props.hasCourseList])
+  }, [props.hasCourseList])
 
   useEffect(() => {
-    const {courseList} = props;
+    if (dispatch) {
+      dispatch({
+        type: 'newReviewForm/fetchTeacherList'
+      })
+    }
+  }, [props.hasTeacherList])
+
+  const renderCourseSelect = () => {
     let treeNodes = [];
     for (const schoolId in courseList) {
       const schoolName = SchoolList[schoolId];
@@ -47,13 +54,32 @@ const CourseInfoForm = (props) => {
         </TreeNode>
       )
     }
-    setCourseTreeSelect(
+    return (
       <TreeSelect showSearch allowClear placeholder="请选择课程">
         {treeNodes}
       </TreeSelect>
     );
+  }
 
-  }, [props.courseList])
+  const renderTeacherSelect = () => {
+    console.log("renderTeacherSelect", teacherList);
+    if (!teacherList) {
+      return <Select />
+    }
+    return (
+      <Select
+        showSearch
+        allowClear
+        placeholder="请选择教师"
+      >
+        {teacherList.map((teacher) => (
+          <Option key={teacher.id} value={`${teacher.id}_${teacher.name}`}>
+            {teacher.name}
+          </Option>
+        ))}
+      </Select>
+    )
+  }
 
   if (!data) {
     return null;
@@ -96,41 +122,18 @@ const CourseInfoForm = (props) => {
             },
           ]}
         >
-          {courseTreeSelect}
+          {renderCourseSelect()}
         </Form.Item>
-        <Form.Item label="收款账户">
-          <Input.Group compact>
-            <Select
-              defaultValue="alipay"
-              style={{
-                width: 100,
-              }}
-            >
-              <Option value="alipay">支付宝</Option>
-              <Option value="bank">银行账户</Option>
-            </Select>
-            <Form.Item
-              noStyle
-              name="receiverAccount"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入收款人账户',
-                },
-                {
-                  type: 'email',
-                  message: '账户名应为邮箱格式',
-                },
-              ]}
-            >
-              <Input
-                style={{
-                  width: 'calc(100% - 100px)',
-                }}
-                placeholder="test@example.com"
-              />
-            </Form.Item>
-          </Input.Group>
+        <Form.Item
+          label="授课老师"
+          name="teacherName"
+          rules={[
+            {
+              required: true,
+              message: '请选择老师'            }
+          ]}
+        >
+          {renderTeacherSelect()}
         </Form.Item>
         <Form.Item
           label="收款人姓名"
@@ -199,5 +202,8 @@ const CourseInfoForm = (props) => {
 
 export default connect(({ newReviewForm }) => ({
   data: newReviewForm.step,
+  hasCourseList: newReviewForm.hasCourseList,
   courseList: newReviewForm.courseList,
+  hasTeacherList: newReviewForm.hasTeacherList,
+  teacherList: newReviewForm.teacherList,
 }))(CourseInfoForm);

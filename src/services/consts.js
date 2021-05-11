@@ -18,6 +18,11 @@ export const TuikeCourseApi = {
   GET_COURSES_BY_SCHOOL : COURSE_API_HOST + "/get_courses_by_school",
 }
 
+const TEACHER_API_HOST = TUIKE_API_HOST + "/teacher";
+export const TuikeTeacherApi = {
+  GET_TEACHER_LIST : TEACHER_API_HOST + "/get_teacher_list",
+}
+
 export const Result = {
 	SUCCESS: "success",
 	ERROR_PARAMS: "error_params",

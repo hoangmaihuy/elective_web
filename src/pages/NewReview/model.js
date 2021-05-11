@@ -1,4 +1,4 @@
-import { fakeSubmitForm, getCoursesBySchool } from './service';
+import { fakeSubmitForm, getCoursesBySchool, getTeacherList } from './service';
 import {Result} from '@/services/consts';
 
 const Model = {
@@ -26,6 +26,17 @@ const Model = {
         })
       }
     },
+
+    *fetchTeacherList({payload}, {call, put}) {
+      const {result, reply} = yield call(getTeacherList);
+      if (result === Result.SUCCESS) {
+        yield put({
+          type: 'saveTeacherList',
+          payload: reply,
+        })
+      }
+    },
+
     *submitStepForm({ payload }, { call, put }) {
       yield call(fakeSubmitForm, payload);
       yield put({
@@ -49,6 +60,11 @@ const Model = {
 
     saveCourseList(state, { payload }) {
       return {...state, courseList: payload, hasCourseList: true}
+    },
+
+    saveTeacherList(state, {payload}) {
+      console.log("saveTeacherList", payload);
+      return {...state, teacherList: payload, hasTeacherList: true}
     }
   },
 };
