@@ -37,6 +37,15 @@ const SubmitResult = (props) => {
     }
   }
 
+  const reSubmit = () => {
+    if (dispatch) {
+      dispatch({
+        type: 'addReviewForm/submitForm',
+        payload: data,
+      });
+    }
+  }
+
   const information = (
     <div className={styles.information}>
       <Descriptions title={"测评内容"} bordered column={2}
@@ -67,10 +76,10 @@ const SubmitResult = (props) => {
 
   const successExtra = (
     <>
-      <Button type="primary" onClick={onFinish}>
+      <Button onClick={onFinish}>
         添加其他测评
       </Button>
-      <Button>
+      <Button type="primary">
         <Link to={`/course/${courseId}`}>查看测评</Link>
       </Button>
     </>
@@ -78,8 +87,11 @@ const SubmitResult = (props) => {
 
   const errorExtra = (
     <>
-      <Button type="primary" onClick={fixFormData}>
+      <Button onClick={fixFormData}>
         修改测评
+      </Button>
+      <Button type="primary" onClick={reSubmit}>
+        重试提交
       </Button>
     </>
   )
@@ -87,7 +99,7 @@ const SubmitResult = (props) => {
   return (
     <Result
       status={status}
-      title={getErrorMessage(status)}
+      title={getErrorMessage(submitStatus)}
       extra={status === 'success' ? successExtra : errorExtra}
       className={styles.result}
     >

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Form, Button, Divider, Input, Rate} from 'antd';
 import { connect } from 'umi';
 import styles from './index.less';
-import { ProjectTwoTone, HeartTwoTone, BookTwoTone, CalculatorTwoTone } from '@ant-design/icons';
 
 const formItemLayout = {
   labelCol: {
@@ -13,8 +12,8 @@ const formItemLayout = {
   },
 };
 
-const CourseInfoForm = (props) => {
-  const { dispatch, data } = props;
+const ReviewForm = (props) => {
+  const { dispatch, data, submitting } = props;
   const [form] = Form.useForm();
 
   if (!data) {
@@ -136,7 +135,7 @@ const CourseInfoForm = (props) => {
           >
             上一步
           </Button>
-          <Button type="primary" onClick={onValidateForm}>
+          <Button type="primary" onClick={onValidateForm} loading={submitting}>
             提交
           </Button>
         </Form.Item>
@@ -150,6 +149,7 @@ const CourseInfoForm = (props) => {
   );
 };
 
-export default connect(({ addReviewForm }) => ({
+export default connect(({ addReviewForm, loading }) => ({
+  submitting: loading.effects['addReviewForm/submitForm'],
   data: addReviewForm.formData,
-}))(CourseInfoForm);
+}))(ReviewForm);

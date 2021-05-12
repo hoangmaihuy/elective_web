@@ -4,6 +4,7 @@ const ErrorMessage = {
 	error_invalid_email: "邮箱不合法",
 	error_authorization: "请登录",
 	error_verification_code: "验证码不正确",
+  error_class_not_exist: "课程班不存在",
 }
 
 const getErrorMessage = (error) => {

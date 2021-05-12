@@ -59,7 +59,7 @@ export default [
                 name: '添加测评',
                 icon: 'form',
                 path: '/review/new',
-                component: './NewReview',
+                component: './AddReview',
               },
               {
                 component: './404',
