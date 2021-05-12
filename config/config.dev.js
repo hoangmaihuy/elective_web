@@ -11,6 +11,13 @@ export default defineConfig({
     babelPlugins: [],
     babelOptions: {},
   },
+  locale: {
+    // default zh-CN
+    default: 'zh-CN',
+    antd: false,
+    // default true, when it is true, will use `navigator.language` overwrite default
+    baseNavigator: true,
+  },
   webpack5: {},
   define: {
     "APP_ENV": "development",
