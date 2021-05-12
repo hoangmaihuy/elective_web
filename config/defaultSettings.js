@@ -1,7 +1,7 @@
 const proSettings = {
   navTheme: 'dark',
   // 拂晓蓝
-  primaryColor: '#1890ff',
+  primaryColor: '@red-7',
   layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,

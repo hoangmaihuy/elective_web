@@ -15,6 +15,17 @@ export const TuikeAccountApi = {
 const COURSE_API_HOST = TUIKE_API_HOST + "/course";
 export const TuikeCourseApi = {
   GET_COURSE_LIST : COURSE_API_HOST + "/get_course_list",
+  GET_COURSES_BY_SCHOOL : COURSE_API_HOST + "/get_courses_by_school",
+}
+
+const TEACHER_API_HOST = TUIKE_API_HOST + "/teacher";
+export const TuikeTeacherApi = {
+  GET_TEACHER_LIST : TEACHER_API_HOST + "/get_teacher_list",
+}
+
+const REVIEW_API_HOST = TUIKE_API_HOST + "/review";
+export const TuikeReviewApi = {
+	ADD_REVIEW : REVIEW_API_HOST + "/add_review",
 }
 
 export const Result = {

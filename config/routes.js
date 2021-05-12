@@ -56,6 +56,12 @@ export default [
                 component: './CourseList'
               },
               {
+                name: '添加测评',
+                icon: 'form',
+                path: '/review/new',
+                component: './NewReview',
+              },
+              {
                 component: './404',
               },
             ],

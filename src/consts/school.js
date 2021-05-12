@@ -52,3 +52,7 @@ const SchoolList = {
 }
 
 export default SchoolList;
+
+export const getAllSchoolIds = () => {
+  return Object.keys(SchoolList).map((key) => parseInt(key, 10));
+}
