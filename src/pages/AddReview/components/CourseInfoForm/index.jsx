@@ -23,7 +23,7 @@ const parseSelectValue = (selectString) => {
 }
 
 const CourseInfoForm = (props) => {
-  const { dispatch, data, courseList, teacherList } = props;
+  const { dispatch, data, courseList, teacherList, fetchingCourses, fetchingTeachers } = props;
   const [form] = Form.useForm();
   const { validateFields, getFieldValue, resetFields } = form;
 
@@ -73,7 +73,7 @@ const CourseInfoForm = (props) => {
       const schoolName = SchoolList[schoolId];
       const courses = courseList[schoolId];
       treeNodes.push(
-        <TreeNode key={`school_${schoolId}`} selectable={false} title={schoolName} >
+        <TreeNode key={`school_${schoolId}`} selectable={false} title={schoolName}>
           {courses.map((course) => (
             <TreeNode
               value={`${course.id}_${course.name}`}
@@ -86,7 +86,7 @@ const CourseInfoForm = (props) => {
       )
     }
     return (
-      <TreeSelect showSearch allowClear placeholder="请选择课程" onChange={onCourseChange}>
+      <TreeSelect showSearch allowClear placeholder="请选择课程" onChange={onCourseChange} loading={fetchingCourses}>
         {treeNodes}
       </TreeSelect>
     );
@@ -98,6 +98,7 @@ const CourseInfoForm = (props) => {
         showSearch
         allowClear
         placeholder="请选择教师"
+        loading={fetchingTeachers}
       >
         {teacherList.map((teacher) => (
           <Option key={teacher.id} value={`${teacher.id}_${teacher.name}`}>
@@ -214,10 +215,12 @@ const CourseInfoForm = (props) => {
   );
 };
 
-export default connect(({ addReviewForm }) => ({
+export default connect(({ addReviewForm, loading }) => ({
   data: addReviewForm.formData,
   hasCourseList: addReviewForm.hasCourseList,
   courseList: addReviewForm.courseList,
+  fetchingCourses: loading.effects['addReviewForm/fetchCourseList'],
   hasTeacherList: addReviewForm.hasTeacherList,
   teacherList: addReviewForm.teacherList,
+  fetchingTeachers: loading.effects['addReviewForm/fetchTeacherList'],
 }))(CourseInfoForm);

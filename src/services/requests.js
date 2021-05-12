@@ -11,7 +11,6 @@ export async function postTuikeApi(url, data) {
     headers.Authorization = `Bearer ${token}`;
 	console.log("postTuikeApi|url=", url, ",headers=", headers, ",data=", data);
 	return request.post(url, {
-		timeout: TIMEOUT,
 		credentials: 'omit',
     headers,
 		data,
@@ -35,7 +34,6 @@ export async function getTuikeApi(url, params) {
     headers.Authorization = `Bearer ${token}`;
   console.log(`getTuikeApi|url=${url}, headers=${headers}, params=${params}`);
   return request.get(url, {
-    timeout: TIMEOUT,
     credentials: 'omit',
     headers,
     params,
