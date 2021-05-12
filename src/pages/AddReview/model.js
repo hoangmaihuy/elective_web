@@ -1,4 +1,4 @@
-import { addReview, getCoursesBySchool, getTeacherList } from './service';
+import { addReview, getCoursesBySchool, getTeachersByCourse } from './service';
 import {Result} from '@/services/consts';
 
 const Model = {
@@ -24,11 +24,12 @@ const Model = {
     },
 
     *fetchTeacherList({payload}, {call, put}) {
-      const {result, reply} = yield call(getTeacherList);
+      console.log("fetchTeacherList", payload);
+      const {result, reply} = yield call(getTeachersByCourse, payload);
       if (result === Result.SUCCESS) {
         yield put({
           type: 'saveTeacherList',
-          payload: reply,
+          payload: reply.teachers,
         })
       }
     },

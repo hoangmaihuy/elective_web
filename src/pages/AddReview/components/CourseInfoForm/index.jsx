@@ -15,9 +15,17 @@ const formItemLayout = {
   },
 };
 
+const parseSelectValue = (selectString) => {
+  const s = selectString.split("_");
+  const id = parseInt(s[0], 10);
+  const name = s[1];
+  return [id, name]
+}
+
 const CourseInfoForm = (props) => {
   const { dispatch, data, courseList, teacherList } = props;
   const [form] = Form.useForm();
+  const { validateFields, getFieldValue, resetFields } = form;
 
   useEffect(() => {
     if (props.hasCourseList)
@@ -30,14 +38,34 @@ const CourseInfoForm = (props) => {
   }, [props.hasCourseList])
 
   useEffect(() => {
-    if (props.hasTeacherList)
-      return;
+    const {courseId} = props.data;
+    if (!courseId)
+      return
+
     if (dispatch) {
       dispatch({
-        type: 'addReviewForm/fetchTeacherList'
+        type: 'addReviewForm/fetchTeacherList',
+        payload: courseId,
       })
     }
-  }, [props.hasTeacherList])
+  }, [props.data.courseId])
+
+  const onCourseChange = () => {
+    const selectedCourseName = getFieldValue("courseName");
+    const [courseId, courseName] = parseSelectValue(selectedCourseName);
+    resetFields(["teacherName"]);
+    if (dispatch) {
+      dispatch({
+        type: 'addReviewForm/saveStepFormData',
+        payload: {
+          teacherId: undefined,
+          teacherName: undefined,
+          courseId,
+          courseName,
+        }
+      })
+    }
+  }
 
   const renderCourseSelect = () => {
     const treeNodes = [];
@@ -58,7 +86,7 @@ const CourseInfoForm = (props) => {
       )
     }
     return (
-      <TreeSelect showSearch allowClear placeholder="请选择课程">
+      <TreeSelect showSearch allowClear placeholder="请选择课程" onChange={onCourseChange}>
         {treeNodes}
       </TreeSelect>
     );
@@ -80,14 +108,11 @@ const CourseInfoForm = (props) => {
     )
   }
 
-  const { validateFields } = form;
 
   const onValidateForm = async () => {
     const values = await validateFields();
-    const courseId = parseInt(values.courseName.split("_")[0], 10);
-    const courseName = values.courseName.split("_")[1];
-    const teacherId = parseInt(values.teacherName.split("_")[0], 10);
-    const teacherName = values.teacherName.split("_")[1];
+    const [courseId, courseName] = parseSelectValue(values.courseName);
+    const [teacherId, teacherName] = parseSelectValue(values.teacherName);
 
     if (dispatch) {
       dispatch({

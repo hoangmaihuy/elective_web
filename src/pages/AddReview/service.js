@@ -20,6 +20,12 @@ export async function getTeacherList() {
   return getTuikeApi(TuikeTeacherApi.GET_TEACHER_LIST);
 }
 
+export async function getTeachersByCourse(courseId) {
+  return postTuikeApi(TuikeTeacherApi.GET_TEACHERS_BY_COURSE, {
+    course_id: courseId
+  })
+}
+
 export async function addReview(data) {
   return postTuikeApi(TuikeReviewApi.ADD_REVIEW, data)
 }
