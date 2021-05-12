@@ -23,6 +23,11 @@ export const TuikeTeacherApi = {
   GET_TEACHER_LIST : TEACHER_API_HOST + "/get_teacher_list",
 }
 
+const REVIEW_API_HOST = TUIKE_API_HOST + "/review";
+export const TuikeReviewApi = {
+	ADD_REVIEW : REVIEW_API_HOST + "/add_review",
+}
+
 export const Result = {
 	SUCCESS: "success",
 	ERROR_PARAMS: "error_params",

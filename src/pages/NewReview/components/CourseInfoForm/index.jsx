@@ -20,6 +20,8 @@ const CourseInfoForm = (props) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
+    if (props.hasCourseList)
+      return;
     if (dispatch) {
       dispatch({
         type: 'addReviewForm/fetchCourseList'
@@ -28,6 +30,8 @@ const CourseInfoForm = (props) => {
   }, [props.hasCourseList])
 
   useEffect(() => {
+    if (props.hasTeacherList)
+      return;
     if (dispatch) {
       dispatch({
         type: 'addReviewForm/fetchTeacherList'
@@ -81,14 +85,18 @@ const CourseInfoForm = (props) => {
   const onValidateForm = async () => {
     const values = await validateFields();
     const courseId = parseInt(values.courseName.split("_")[0], 10);
+    const courseName = values.courseName.split("_")[1];
     const teacherId = parseInt(values.teacherName.split("_")[0], 10);
+    const teacherName = values.teacherName.split("_")[1];
 
     if (dispatch) {
       dispatch({
         type: 'addReviewForm/saveStepFormData',
         payload: {
           courseId,
+          courseName,
           teacherId,
+          teacherName,
           semester: values.semester,
         },
       });

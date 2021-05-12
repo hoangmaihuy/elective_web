@@ -4,7 +4,9 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { connect } from 'umi';
 import CourseInfoForm from './components/CourseInfoForm';
 import ReviewForm from './components/ReviewForm';
+import SubmitResult from './components/Result'
 import styles from './style.less';
+
 const { Step } = Steps;
 
 const getCurrentStepAndComponent = (current) => {
@@ -13,6 +15,12 @@ const getCurrentStepAndComponent = (current) => {
       return {
         step: 1,
         component: <ReviewForm />
+      };
+
+    case 'result':
+      return {
+        step: 2,
+        component: <SubmitResult />
       }
 
     case 'courseInfo':

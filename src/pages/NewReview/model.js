@@ -1,4 +1,4 @@
-import { fakeSubmitForm, getCoursesBySchool, getTeacherList } from './service';
+import { addReview, getCoursesBySchool, getTeacherList } from './service';
 import {Result} from '@/services/consts';
 
 const Model = {
@@ -9,6 +9,7 @@ const Model = {
     courseList: [],
     hasTeacherList: false,
     teacherList: [],
+    submitStatus: undefined,
     formData: {},
   },
   effects: {
@@ -33,12 +34,29 @@ const Model = {
     },
 
     *submitForm({ payload }, { call, put }) {
-      console.log("submitForm", payload);
-      yield call(fakeSubmitForm, payload);
+      const data = {
+        course_id: payload.courseId,
+        teacher_id: payload.teacherId,
+        semester: payload.semester,
+        title: payload.title,
+        content: payload.content,
+        recommend_score: payload.recommendScore,
+        work_score: payload.workScore,
+        exam_score: payload.examScore,
+        content_score: payload.contentScore,
+      }
+
       yield put({
         type: 'saveStepFormData',
         payload,
       });
+
+      const {result} = yield call(addReview, data);
+      yield put({
+        type: 'saveSubmitStatus',
+        payload: result,
+      })
+
       yield put({
         type: 'switchStep',
         payload: 'result',
@@ -47,8 +65,15 @@ const Model = {
   },
   reducers: {
     switchStep(state, { payload }) {
-      console.log(payload);
       return { ...state, current: payload };
+    },
+
+    saveSubmitStatus(state, { payload }) {
+      return { ...state, submitStatus: payload }
+    },
+
+    resetFormData(state) {
+      return { ...state, formData: {}}
     },
 
     saveStepFormData(state, { payload }) {
