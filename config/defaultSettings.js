@@ -10,8 +10,5 @@ const proSettings = {
   title: '推课网',
   pwa: false,
   iconfontUrl: '',
-  menu: {
-    disableLocal: false,
-  }
 };
 export default proSettings;
