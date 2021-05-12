@@ -23,9 +23,9 @@ const CourseList = () => {
     {
       title: '课程名',
       dataIndex: 'name',
-      render: (text, record, index) => {
+      render: (text, record) => {
         return (
-          <Link to={`/course/${index}`}>{text}</Link>
+          <Link to={`/course/${record.id}`}>{text}</Link>
         )
       },
     },
