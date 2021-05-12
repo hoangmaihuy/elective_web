@@ -11,9 +11,7 @@ export async function fakeSubmitForm(params) {
 }
 
 export async function getCoursesBySchool() {
-  return postTuikeApi(TuikeCourseApi.GET_COURSES_BY_SCHOOL, {
-    school_ids: getAllSchoolIds()
-  })
+  return getTuikeApi(TuikeCourseApi.GET_COURSES_BY_SCHOOL, {})
 }
 
 export async function getTeacherList() {
