@@ -19,11 +19,10 @@ const UserLayout = (props) => {
       pathname: '',
     },
   } = props;
-  const { formatMessage } = useIntl();
+  const {} = useIntl();
   const { breadcrumb } = getMenuData(routes);
   const title = getPageTitle({
     pathname: location.pathname,
-    formatMessage,
     breadcrumb,
     ...props,
   });
@@ -43,12 +42,7 @@ const UserLayout = (props) => {
                 <span className={styles.title}>推课网</span>
               </Link>
             </div>
-            <div className={styles.desc}>
-              <FormattedMessage
-                id="pages.layouts.userLayout.title"
-                defaultMessage="为你推课，不怕退课"
-              />
-            </div>
+            <div className={styles.desc}>为你推课，不怕退课</div>
           </div>
           {children}
         </div>
@@ -60,7 +54,7 @@ const UserLayout = (props) => {
               title: <GithubOutlined />,
               href: 'https://github.com/hoangmaihuy/tuike_web',
               blankTarget: true,
-            }
+            },
           ]}
         />
       </div>

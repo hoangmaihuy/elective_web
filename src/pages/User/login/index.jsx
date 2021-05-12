@@ -1,14 +1,11 @@
-import {
-  MailOutlined,
-  LockOutlined,
-} from '@ant-design/icons';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { useIntl, connect, FormattedMessage } from 'umi';
 import { requestVerificationCode } from '@/services/login';
 import styles from './index.less';
-import {Result as ApiResult} from '@/services/consts'
+import { Result as ApiResult } from '@/services/consts';
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -83,26 +80,16 @@ const Login = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.email.required"
-                      defaultMessage="请输入北大邮箱！"
-                    />
-                  ),
+                  message: '北大邮箱是必填项！',
                 },
                 {
                   type: 'email',
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.email.invalid"
-                      defaultMessage="邮箱格式错误！"
-                    />
-                  ),
+                  message: '邮箱格式错误',
                 },
               ]}
             />
             <ProFormCaptcha
-              phoneName='email'
+              phoneName="email"
               fieldProps={{
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
@@ -131,23 +118,22 @@ const Login = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.captcha.required"
-                      defaultMessage="请输入验证码！"
-                    />
-                  ),
+                  message: '验证码是必填项！',
                 },
               ]}
               onGetCaptcha={async (email) => {
-                const {result} = await requestVerificationCode(email);
+                const { result } = await requestVerificationCode(email);
+
                 if (result !== ApiResult.SUCCESS) {
-                  message.error(intl.formatMessage({
-                    id: `error.${result}`,
-                    defaultMessage: '系统出错，请重试',
-                  }))
+                  message.error(
+                    intl.formatMessage({
+                      id: `error.${result}`,
+                      defaultMessage: '系统出错，请重试',
+                    }),
+                  );
                   return;
                 }
+
                 message.success('获取验证码成功，请查看邮箱！');
               }}
             />
@@ -159,7 +145,7 @@ const Login = (props) => {
           }}
         >
           <ProFormCheckbox noStyle name="autoLogin">
-            <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
+            自动登录
           </ProFormCheckbox>
         </div>
       </ProForm>

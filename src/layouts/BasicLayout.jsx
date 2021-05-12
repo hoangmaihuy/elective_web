@@ -12,6 +12,7 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { getMatchMenu } from '@umijs/route-utils';
 import logo from '../assets/logo.svg';
+
 const noMatch = (
   <Result
     status={403}
@@ -24,8 +25,8 @@ const noMatch = (
     }
   />
 );
-
 /** Use Authorized check all menu item */
+
 const menuDataRender = (menuList) =>
   menuList.map((item) => {
     const localItem = {
@@ -44,7 +45,7 @@ const defaultFooterDom = (
         title: <GithubOutlined />,
         href: 'https://github.com/hoangmaihuy/tuike_web',
         blankTarget: true,
-      }
+      },
     ]}
   />
 );
@@ -84,11 +85,10 @@ const BasicLayout = (props) => {
       },
     [location.pathname],
   );
-  const { formatMessage } = useIntl();
+  const {} = useIntl();
   return (
     <ProLayout
       logo={logo}
-      formatMessage={formatMessage}
       {...props}
       {...settings}
       onCollapse={handleMenuCollapse}
@@ -107,9 +107,7 @@ const BasicLayout = (props) => {
       breadcrumbRender={(routers = []) => [
         {
           path: '/',
-          breadcrumbName: formatMessage({
-            id: 'menu.home',
-          }),
+          breadcrumbName: '首页',
         },
         ...routers,
       ]}
