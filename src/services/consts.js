@@ -16,6 +16,7 @@ const COURSE_API_HOST = TUIKE_API_HOST + "/course";
 export const TuikeCourseApi = {
   GET_COURSE_LIST : COURSE_API_HOST + "/get_course_list",
   GET_COURSES_BY_SCHOOL : COURSE_API_HOST + "/get_courses_by_school",
+  GET_COURSE_INFO : COURSE_API_HOST + "/get_course_info",
 }
 
 const TEACHER_API_HOST = TUIKE_API_HOST + "/teacher";
@@ -35,5 +36,6 @@ export const Result = {
 	ERROR_REQUEST: "error_request",
 	ERROR_INVALID_EMAIL: "error_invalid_email",
 	ERROR_AUTHORIZATION: "error_authorization",
+  ERROR_COURSE_NOT_FOUND: "error_course_not_found",
 }
 

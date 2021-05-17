@@ -62,6 +62,10 @@ export default [
                 component: './AddReview',
               },
               {
+                path: '/course/:courseId',
+                component: './CourseDetail'
+              },
+              {
                 component: './404',
               },
             ],
