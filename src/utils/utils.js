@@ -21,3 +21,7 @@ export const isAntDesignProOrDev = () => {
   return isAntDesignPro();
 };
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
+
+export const roundToHalf = (x) => {
+  return Math.round(x*2)/2;
+}
