@@ -166,20 +166,20 @@ const CourseDetail = (props) => {
             <Descriptions.Item label={"学期"}>{review.semester}</Descriptions.Item>
           </Descriptions>
 
-          <p>{review.content}</p>
+          {review.content.split('\n').map((paragraph) => (<p>{paragraph}</p>))}
 
-          <Descriptions column={{md: 4, sm: 4, xs: 2}} labelStyle={{fontWeight: "bold"}} >
-            <Descriptions.Item label={"推荐"}>
-              {review.recommend_score.toFixed(2)} 分
+          <Descriptions column={{md: 4, sm: 2, xs: 1}} colon={false} labelStyle={{fontWeight: "bold", width: "40%"}} >
+            <Descriptions.Item label={"推荐分"}>
+              <Rate className={styles.rateStar} allowHalf disabled defaultValue={review.recommend_score}/>
             </Descriptions.Item>
             <Descriptions.Item label={"课程内容"}>
-              {review.content_score.toFixed(2)} 分
+              <Rate className={styles.rateStar} allowHalf disabled defaultValue={review.content_score}/>
             </Descriptions.Item>
             <Descriptions.Item label={"任务量"}>
-              {review.work_score.toFixed(2)} 分
+              <Rate className={styles.rateStar} allowHalf disabled defaultValue={review.work_score}/>
             </Descriptions.Item>
             <Descriptions.Item label={"考核/给分"}>
-              {review.exam_score.toFixed(2)} 分
+              <Rate className={styles.rateStar} allowHalf disabled defaultValue={review.exam_score}/>
             </Descriptions.Item>
           </Descriptions>
         </List.Item>
