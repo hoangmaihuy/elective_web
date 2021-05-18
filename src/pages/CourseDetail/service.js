@@ -7,10 +7,13 @@ export async function getCourseInfo(courseId) {
   })
 }
 
-export async function getCourseReviews(courseId, pagination) {
-  return postTuikeApi(TuikeReviewApi.GET_COURSE_REVIEWS, {
+export async function getCourseReviews(courseId, pagination, params) {
+  let data = {
     course_id: courseId,
     current_page: pagination.current,
     page_size: pagination.pageSize,
-  })
+  }
+  if (params.teacherId)
+    data.teacher_id = params.teacherId;
+  return postTuikeApi(TuikeReviewApi.GET_COURSE_REVIEWS, data);
 }

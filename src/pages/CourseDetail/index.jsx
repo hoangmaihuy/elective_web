@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createElement } from 'react';
 import {Button, Result, Rate, Descriptions, Tooltip} from "antd";
 import {connect, history, useParams} from "umi";
-import SchoolList from '@/consts/school';
+import moment from "moment";
 import {Result as ApiResult} from '@/services/consts';
 import { GridContent } from '@ant-design/pro-layout';
 import {HomeOutlined, BookOutlined, ScheduleOutlined, NumberOutlined, LikeOutlined, DislikeOutlined} from '@ant-design/icons';
@@ -11,14 +11,18 @@ import styles from './style.less';
 
 
 const CourseDetail = (props) => {
-  const { dispatch, put, pagination } = props;
-  const { status, courseInfo, teacherList, courseReviews } = props;
+  const { dispatch, pagination } = props;
+  const { status, courseInfo, teacherList, courseReviews, reviewParams } = props;
   const { fetchingCourseInfo, fetchingTeacherList, fetchingCourseReviews } = props;
   const params = useParams();
   const courseId = parseInt(params.courseId, 10);
 
   useEffect(() => {
     if (dispatch) {
+      dispatch({
+        type: "courseDetail/resetState"
+      })
+
       dispatch({
         type: "courseDetail/fetchCourseInfo",
         payload: courseId,
@@ -41,10 +45,11 @@ const CourseDetail = (props) => {
             current: pagination.current,
             pageSize: pagination.pageSize,
           },
+          params: reviewParams,
         }
       })
     }
-  }, [courseId, pagination.current, pagination.pageSize])
+  }, [courseId, pagination.current, pagination.pageSize, reviewParams])
 
   if (!fetchingCourseInfo && status === ApiResult.ERROR_COURSE_NOT_FOUND) {
     return (
@@ -104,24 +109,24 @@ const CourseDetail = (props) => {
           </Descriptions>
         </div>
         <Divider dashed/>
-        <div className={styles.detail}>
-          <p>
+        <Row>
+          <Col span={12}>
             <NumberOutlined className={styles.infoIcon}/>
             {courseInfo.courseNo}
-          </p>
-          <p>
+          </Col>
+          <Col span={12}>
             <HomeOutlined className={styles.infoIcon}/>
             {courseInfo.schoolName}
-          </p>
-          <p>
+          </Col>
+          <Col span={12}>
             <BookOutlined className={styles.infoIcon}/>
             {courseInfo.typeName}
-          </p>
-          <p>
+          </Col>
+          <Col span={12}>
             <ScheduleOutlined className={styles.infoIcon}/>
             {`${courseInfo.credit} 学分`}
-          </p>
-        </div>
+          </Col>
+        </Row>
       </div>
     )
   }
@@ -130,8 +135,19 @@ const CourseDetail = (props) => {
     return (
       <div className={styles.tags}>
         <div className={styles.tagsTitle}>任课老师</div>
-        {teacherList.map((teacher) => (
-          <Tag key={teacher.id}>{teacher.name}</Tag>
+        {[{id: 0, name: '所有'}].concat(teacherList).map((teacher) => (
+          <Tag.CheckableTag
+            key={teacher.id}
+            checked={reviewParams.teacherId === teacher.id}
+            onChange={(checked) => dispatch({
+              type: 'courseDetail/changeReviewParams',
+              payload: {
+                teacherId: checked ? teacher.id : 0
+              }
+            })}
+          >
+            {teacher.name}
+          </Tag.CheckableTag>
         ))}
       </div>
     )
@@ -142,7 +158,11 @@ const CourseDetail = (props) => {
 
     const renderReview = (review) => {
       const reviewTime = (new Date(review.create_time * 1000)).toLocaleString();
-      const description = `${review.teacher_name}，${review.semester}，${reviewTime}`
+      const reviewMoment = (
+        <Tooltip title={moment(reviewTime).format('YYYY-MM-DD HH:mm:ss')}>
+          <span>{moment(reviewTime).fromNow()}</span>
+        </Tooltip>
+      )
       const likeReview = () => {
 
       }
@@ -167,8 +187,8 @@ const CourseDetail = (props) => {
 
       return (
         <List.Item actions={actions}>
-          <List.Item.Meta title={<b>{review.title}</b>} description={reviewTime}/>
-          <Descriptions column={2} labelStyle={{fontWeight: "bold"}}>
+          <List.Item.Meta title={<b>{review.title}</b>} description={reviewMoment}/>
+          <Descriptions column={{xs: 1, sm: 2}} labelStyle={{fontWeight: "bold"}}>
             <Descriptions.Item label={"任课老师"}> {review.teacher_name} </Descriptions.Item>
             <Descriptions.Item label={"学期"}>{review.semester}</Descriptions.Item>
           </Descriptions>
@@ -257,5 +277,6 @@ export default connect(({ loading, courseDetail }) => ({
   teacherList: courseDetail.teacherList,
   fetchingTeacherList: loading.effects["courseDetail/fetchTeacherList"],
   courseReviews: courseDetail.courseReviews,
-  fetchingCourseReviews: loading.effects["courseDetail/fetchCourseReviews"]
+  fetchingCourseReviews: loading.effects["courseDetail/fetchCourseReviews"],
+  reviewParams: courseDetail.reviewParams,
 }))(CourseDetail);

@@ -45,8 +45,8 @@ const Model = {
       }
     },
     *fetchCourseReviews({payload}, { call, put }) {
-      const { courseId, pagination } = payload;
-      const { result, reply } = yield call(getCourseReviews, courseId, pagination)
+      const { courseId, pagination, params } = payload;
+      const { result, reply } = yield call(getCourseReviews, courseId, pagination, params)
       yield put({
         type: 'saveCourseReviews',
         payload: reply,
@@ -54,6 +54,25 @@ const Model = {
     },
   },
   reducers: {
+    resetState(state) {
+      return {
+        status: undefined,
+        courseInfo: {},
+        teacherList: [],
+        courseReviews: [],
+        reviewParams: {
+          teacherId: 0,
+          semester: 'all',
+          sortedBy: 'latest',
+        },
+        pagination: {
+          total: 0,
+          current: 1,
+          pageSize: 10,
+        }
+      }
+    },
+
     saveCourseInfo(state, {payload}) {
       const {status, courseInfo} = payload;
       if (status !== Result.SUCCESS)
@@ -103,6 +122,16 @@ const Model = {
         ...state,
         pagination: {
           ...state.pagination,
+          ...payload
+        }
+      }
+    },
+
+    changeReviewParams(state, {payload}) {
+      return {
+        ...state,
+        reviewParams: {
+          ...state.reviewParams,
           ...payload
         }
       }
