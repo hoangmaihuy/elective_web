@@ -51,7 +51,7 @@ const Model = {
         type: 'saveCourseReviews',
         payload: reply,
       })
-    }
+    },
   },
   reducers: {
     saveCourseInfo(state, {payload}) {
@@ -94,6 +94,16 @@ const Model = {
         pagination: {
           ...state.pagination,
           total: payload.total,
+        }
+      }
+    },
+
+    savePagination(state, {payload}) {
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          ...payload
         }
       }
     }

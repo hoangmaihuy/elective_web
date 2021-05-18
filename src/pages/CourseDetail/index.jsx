@@ -11,7 +11,7 @@ import styles from './style.less';
 
 
 const CourseDetail = (props) => {
-  const { dispatch, pagination } = props;
+  const { dispatch, put, pagination } = props;
   const { status, courseInfo, teacherList, courseReviews } = props;
   const { fetchingCourseInfo, fetchingTeacherList, fetchingCourseReviews } = props;
   const params = useParams();
@@ -28,16 +28,23 @@ const CourseDetail = (props) => {
         type: "courseDetail/fetchTeacherList",
         payload: courseId
       })
+    }
+  }, [courseId])
 
+  useEffect(() => {
+    if (dispatch) {
       dispatch({
         type: "courseDetail/fetchCourseReviews",
         payload: {
           courseId,
-          pagination,
+          pagination: {
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+          },
         }
       })
     }
-  }, [courseId])
+  }, [courseId, pagination.current, pagination.pageSize])
 
   if (!fetchingCourseInfo && status === ApiResult.ERROR_COURSE_NOT_FOUND) {
     return (
@@ -160,7 +167,7 @@ const CourseDetail = (props) => {
 
       return (
         <List.Item actions={actions}>
-          <List.Item.Meta title={review.title} description={reviewTime}/>
+          <List.Item.Meta title={<b>{review.title}</b>} description={reviewTime}/>
           <Descriptions column={2} labelStyle={{fontWeight: "bold"}}>
             <Descriptions.Item label={"任课老师"}> {review.teacher_name} </Descriptions.Item>
             <Descriptions.Item label={"学期"}>{review.semester}</Descriptions.Item>
@@ -193,6 +200,16 @@ const CourseDetail = (props) => {
         rowKey={"id"}
         pagination={{
           size: "small",
+          showSizeChanger: true,
+          onChange: (page, pageSize) => {
+            dispatch({
+              type: "courseDetail/savePagination",
+              payload: {
+                current: page,
+                pageSize,
+              }
+            })
+          },
           ...pagination
         }}
         itemLayout={"vertical"}
