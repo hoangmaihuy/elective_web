@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import {Button, Result, Rate, Descriptions} from "antd";
+import React, { useState, useEffect, createElement } from 'react';
+import {Button, Result, Rate, Descriptions, Tooltip} from "antd";
 import {connect, history, useParams} from "umi";
 import SchoolList from '@/consts/school';
 import {Result as ApiResult} from '@/services/consts';
 import { GridContent } from '@ant-design/pro-layout';
-import { HomeOutlined, BookOutlined, ScheduleOutlined, NumberOutlined } from '@ant-design/icons';
-import { Avatar, Card, Col, Divider, Input, Row, Tag } from 'antd';
+import {HomeOutlined, BookOutlined, ScheduleOutlined, NumberOutlined, LikeOutlined, DislikeOutlined} from '@ant-design/icons';
+import { Avatar, Card, Col, Divider, Input, Row, Tag, List } from 'antd';
 import { roundToHalf } from "@/utils/utils";
 import styles from './style.less';
 
 
 const CourseDetail = (props) => {
-  const { dispatch } = props;
+  const { dispatch, pagination } = props;
   const { status, courseInfo, teacherList, courseReviews } = props;
   const { fetchingCourseInfo, fetchingTeacherList, fetchingCourseReviews } = props;
   const params = useParams();
@@ -26,7 +26,15 @@ const CourseDetail = (props) => {
 
       dispatch({
         type: "courseDetail/fetchTeacherList",
-        payload: courseId,
+        payload: courseId
+      })
+
+      dispatch({
+        type: "courseDetail/fetchCourseReviews",
+        payload: {
+          courseId,
+          pagination,
+        }
       })
     }
   }, [courseId])
@@ -122,6 +130,77 @@ const CourseDetail = (props) => {
     )
   }
 
+  const renderCourseReviews = () => {
+    const header = "课程评测";
+
+    const renderReview = (review) => {
+      const reviewTime = (new Date(review.create_time * 1000)).toLocaleString();
+      const description = `${review.teacher_name}，${review.semester}，${reviewTime}`
+      const likeReview = () => {
+
+      }
+
+      const dislikeReview = () => {
+
+      }
+      const actions = [
+        <Tooltip title={"点赞"}>
+          <span onClick={likeReview} style={{cursor: "pointer"}}>
+            <LikeOutlined />
+            <span style={{marginLeft: "5px"}}>{review.like_count || 0}</span>
+          </span>
+        </Tooltip>,
+        <Tooltip title={"反对"}>
+          <span onClick={dislikeReview} style={{cursor: "pointer"}}>
+            <DislikeOutlined />
+            <span style={{marginLeft: "5px"}}>{review.dislike_count || 0}</span>
+          </span>
+        </Tooltip>
+      ]
+
+      return (
+        <List.Item actions={actions}>
+          <List.Item.Meta title={review.title} description={reviewTime}/>
+          <Descriptions column={2} labelStyle={{fontWeight: "bold"}}>
+            <Descriptions.Item label={"任课老师"}> {review.teacher_name} </Descriptions.Item>
+            <Descriptions.Item label={"学期"}>{review.semester}</Descriptions.Item>
+          </Descriptions>
+
+          <p>{review.content}</p>
+
+          <Descriptions column={{md: 4, sm: 4, xs: 2}} labelStyle={{fontWeight: "bold"}} >
+            <Descriptions.Item label={"推荐"}>
+              {review.recommend_score.toFixed(2)} 分
+            </Descriptions.Item>
+            <Descriptions.Item label={"课程内容"}>
+              {review.content_score.toFixed(2)} 分
+            </Descriptions.Item>
+            <Descriptions.Item label={"任务量"}>
+              {review.work_score.toFixed(2)} 分
+            </Descriptions.Item>
+            <Descriptions.Item label={"考核/给分"}>
+              {review.exam_score.toFixed(2)} 分
+            </Descriptions.Item>
+          </Descriptions>
+        </List.Item>
+      )
+    }
+
+    return (
+      <List
+        loading={fetchingCourseReviews}
+        dataSource={courseReviews}
+        rowKey={"id"}
+        pagination={{
+          size: "small",
+          ...pagination
+        }}
+        itemLayout={"vertical"}
+        renderItem={renderReview}
+      />
+    )
+  }
+
   return (
     <GridContent>
       <Row gutter={24}>
@@ -138,6 +217,16 @@ const CourseDetail = (props) => {
             {renderTeacherList()}
           </Card>
         </Col>
+
+        <Col lg={17} md={24}>
+          <Card
+            bordered
+            title={"课程评测"}
+            loading={fetchingCourseReviews}
+          >
+            {renderCourseReviews()}
+          </Card>
+        </Col>
       </Row>
     </GridContent>
   )
@@ -145,10 +234,11 @@ const CourseDetail = (props) => {
 
 export default connect(({ loading, courseDetail }) => ({
   status: courseDetail.status,
+  pagination: courseDetail.pagination,
   courseInfo: courseDetail.courseInfo,
   fetchingCourseInfo: loading.effects["courseDetail/fetchCourseInfo"],
   teacherList: courseDetail.teacherList,
   fetchingTeacherList: loading.effects["courseDetail/fetchTeacherList"],
   courseReviews: courseDetail.courseReviews,
-  fetchingCourseReviews: loading.effects[""]
+  fetchingCourseReviews: loading.effects["courseDetail/fetchCourseReviews"]
 }))(CourseDetail);

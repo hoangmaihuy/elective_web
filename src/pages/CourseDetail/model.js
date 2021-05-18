@@ -3,6 +3,7 @@ import {Result} from '@/services/consts';
 import SchoolList from "@/consts/school";
 import CourseType from "@/consts/courseType";
 import {getTeachersByCourse} from "@/pages/AddReview/service";
+import { getCourseReviews } from './service';
 
 const Model = {
   namespace: 'courseDetail',
@@ -11,6 +12,16 @@ const Model = {
     courseInfo: {},
     teacherList: [],
     courseReviews: [],
+    reviewParams: {
+      teacherId: 0,
+      semester: 'all',
+      sortedBy: 'latest',
+    },
+    pagination: {
+      total: 0,
+      current: 1,
+      pageSize: 10,
+    }
   },
   effects: {
     *fetchCourseInfo({payload}, { call, put }) {
@@ -33,7 +44,14 @@ const Model = {
         })
       }
     },
-
+    *fetchCourseReviews({payload}, { call, put }) {
+      const { courseId, pagination } = payload;
+      const { result, reply } = yield call(getCourseReviews, courseId, pagination)
+      yield put({
+        type: 'saveCourseReviews',
+        payload: reply,
+      })
+    }
   },
   reducers: {
     saveCourseInfo(state, {payload}) {
@@ -67,8 +85,18 @@ const Model = {
 
     saveTeacherList(state, {payload}) {
       return {...state, teacherList: payload}
-    }
+    },
 
+    saveCourseReviews(state, {payload}) {
+      return {
+        ...state,
+        courseReviews: payload.reviews,
+        pagination: {
+          ...state.pagination,
+          total: payload.total,
+        }
+      }
+    }
   },
 };
 export default Model;
