@@ -56,13 +56,11 @@ const Model = {
     },
     *interactReview({payload}, { call, put }) {
       const {reviewId, action} = payload;
-      const { result, _ } = yield call(interactReview, reviewId, action);
-      if (result === Result.SUCCESS) {
-        yield put({
-          type: 'changeReviewInteract',
-          payload,
-        })
-      }
+      yield put({
+        type: 'changeReviewInteract',
+        payload,
+      })
+      yield call(interactReview, reviewId, action);
     }
   },
   reducers: {
