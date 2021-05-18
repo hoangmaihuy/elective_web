@@ -3,16 +3,18 @@ import {Button, Result, Rate, Descriptions, Tooltip} from "antd";
 import {connect, history, useParams} from "umi";
 import moment from "moment";
 import {Result as ApiResult} from '@/services/consts';
-import { GridContent } from '@ant-design/pro-layout';
-import {HomeOutlined, BookOutlined, ScheduleOutlined, NumberOutlined, LikeOutlined, DislikeOutlined} from '@ant-design/icons';
+import { GridContent, PageContainer } from '@ant-design/pro-layout';
+import {HomeOutlined, BookOutlined, ScheduleOutlined, NumberOutlined, LikeOutlined, DislikeOutlined, LikeFilled, DislikeFilled} from '@ant-design/icons';
 import { Avatar, Card, Col, Divider, Input, Row, Tag, List } from 'antd';
 import { roundToHalf } from "@/utils/utils";
 import styles from './style.less';
+import LikeButton from "@/pages/CourseDetail/components/LikeButton";
+import DislikeButton from "@/pages/CourseDetail/components/DislikeButton";
 
 
 const CourseDetail = (props) => {
   const { dispatch, pagination } = props;
-  const { status, courseInfo, teacherList, courseReviews, reviewParams } = props;
+  const { status, courseInfo, teacherList, courseReviews, reviewParams, userId } = props;
   const { fetchingCourseInfo, fetchingTeacherList, fetchingCourseReviews } = props;
   const params = useParams();
   const courseId = parseInt(params.courseId, 10);
@@ -154,7 +156,6 @@ const CourseDetail = (props) => {
   }
 
   const renderCourseReviews = () => {
-    const header = "课程评测";
 
     const renderReview = (review) => {
       const reviewTime = (new Date(review.create_time * 1000)).toLocaleString();
@@ -163,26 +164,43 @@ const CourseDetail = (props) => {
           <span>{moment(reviewTime).fromNow()}</span>
         </Tooltip>
       )
-      const likeReview = () => {
-
+      const onLikeReview = () => {
+        if (review.likes.includes(userId))
+          return;
+        dispatch({
+          type: "courseDetail/interactReview",
+          payload: {
+            userId,
+            reviewId: review.id,
+            action: "like",
+          }
+        })
       }
 
-      const dislikeReview = () => {
+      const onDislikeReview = () => {
+        if (review.dislikes.includes(userId))
+          return;
+        dispatch({
+          type: "courseDetail/interactReview",
+          payload: {
+            userId,
+            reviewId: review.id,
+            action: "dislike",
+          }
+        })
 
       }
       const actions = [
-        <Tooltip title={"点赞"}>
-          <span onClick={likeReview} style={{cursor: "pointer"}}>
-            <LikeOutlined />
-            <span style={{marginLeft: "5px"}}>{review.like_count || 0}</span>
-          </span>
-        </Tooltip>,
-        <Tooltip title={"反对"}>
-          <span onClick={dislikeReview} style={{cursor: "pointer"}}>
-            <DislikeOutlined />
-            <span style={{marginLeft: "5px"}}>{review.dislike_count || 0}</span>
-          </span>
-        </Tooltip>
+        <LikeButton
+          filled={review.likes.includes(userId)}
+          count={review.likes.length}
+          onClick={onLikeReview}
+        />,
+        <DislikeButton
+          filled={review.dislikes.includes(userId)}
+          count={review.dislikes.length}
+          onClick={onDislikeReview}
+        />
       ]
 
       return (
@@ -239,6 +257,7 @@ const CourseDetail = (props) => {
   }
 
   return (
+    <PageContainer>
     <GridContent>
       <Row gutter={24}>
         <Col lg={7} md={24}>
@@ -266,10 +285,12 @@ const CourseDetail = (props) => {
         </Col>
       </Row>
     </GridContent>
+    </PageContainer>
   )
 }
 
-export default connect(({ loading, courseDetail }) => ({
+export default connect(({ loading, courseDetail, user }) => ({
+  userId: user.currentUser.user_id,
   status: courseDetail.status,
   pagination: courseDetail.pagination,
   courseInfo: courseDetail.courseInfo,

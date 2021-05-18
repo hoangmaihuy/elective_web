@@ -53,7 +53,7 @@ export default [
                 name: '课程列表',
                 icon: 'table',
                 path: '/courses',
-                component: './CourseList'
+                component: './CourseList',
               },
               {
                 name: '添加测评',
@@ -62,6 +62,8 @@ export default [
                 component: './AddReview',
               },
               {
+                name: '课程详细',
+                hideInMenu: true,
                 path: '/course/:courseId',
                 component: './CourseDetail'
               },

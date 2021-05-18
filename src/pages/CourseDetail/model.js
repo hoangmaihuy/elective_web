@@ -3,7 +3,7 @@ import {Result} from '@/services/consts';
 import SchoolList from "@/consts/school";
 import CourseType from "@/consts/courseType";
 import {getTeachersByCourse} from "@/pages/AddReview/service";
-import { getCourseReviews } from './service';
+import { getCourseReviews, interactReview } from './service';
 
 const Model = {
   namespace: 'courseDetail',
@@ -47,11 +47,23 @@ const Model = {
     *fetchCourseReviews({payload}, { call, put }) {
       const { courseId, pagination, params } = payload;
       const { result, reply } = yield call(getCourseReviews, courseId, pagination, params)
-      yield put({
-        type: 'saveCourseReviews',
-        payload: reply,
-      })
+      if (result === Result.SUCCESS) {
+        yield put({
+          type: 'saveCourseReviews',
+          payload: reply,
+        })
+      }
     },
+    *interactReview({payload}, { call, put }) {
+      const {reviewId, action} = payload;
+      const { result, _ } = yield call(interactReview, reviewId, action);
+      if (result === Result.SUCCESS) {
+        yield put({
+          type: 'changeReviewInteract',
+          payload,
+        })
+      }
+    }
   },
   reducers: {
     resetState(state) {
@@ -135,7 +147,30 @@ const Model = {
           ...payload
         }
       }
-    }
+    },
+
+    changeReviewInteract(state, {payload}) {
+      const {userId, reviewId, action} = payload;
+      const newCourseReviews =  state.courseReviews.map((review) => {
+        if (review.id !== reviewId)
+          return review;
+        let newReview = {
+          ...review
+        }
+        if (action === "like") {
+          newReview.likes.push(userId);
+          newReview.dislikes = newReview.dislikes.filter((id) => (id !== userId));
+        } else {
+          newReview.dislikes.push(userId);
+          newReview.likes = newReview.likes.filter((id) => (id !== userId));
+        }
+        return newReview;
+      })
+      return {
+        ...state,
+        courseReviews: newCourseReviews,
+      }
+    },
   },
 };
 export default Model;
