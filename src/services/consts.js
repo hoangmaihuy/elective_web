@@ -1,4 +1,3 @@
-const TUIKE_API_HOST = '/api';
 export const TuikeApiHost = TUIKE_API_HOST;
 
 const TEST_API_HOST = TUIKE_API_HOST + "/test";
