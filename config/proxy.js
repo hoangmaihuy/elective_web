@@ -8,19 +8,19 @@
 export default {
   dev: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'https://tuike-api-test.herokuapp.com',
       changeOrigin: true,
       pathRewrite: {
-        '^': '',
+        '^/api': '',
       },
     },
   },
   test: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'https://tuike-api-test.herokuapp.com',
       changeOrigin: true,
       pathRewrite: {
-        '^': '',
+        '^/api': '',
       },
     },
   },
@@ -29,7 +29,7 @@ export default {
       target: 'your pre url',
       changeOrigin: true,
       pathRewrite: {
-        '^': '',
+        '^/api': '',
       },
     },
   },

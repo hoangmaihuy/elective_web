@@ -1,3 +1,4 @@
+const TUIKE_API_HOST = '/api';
 export const TuikeApiHost = TUIKE_API_HOST;
 
 const TEST_API_HOST = TUIKE_API_HOST + "/test";
@@ -39,5 +40,6 @@ export const Result = {
 	ERROR_INVALID_EMAIL: "error_invalid_email",
 	ERROR_AUTHORIZATION: "error_authorization",
   ERROR_COURSE_NOT_FOUND: "error_course_not_found",
+  ERROR_VERIFICATION_CODE: "error_verification_code",
 }
 
