@@ -13,9 +13,10 @@ export default defineConfig({
   },
   webpack5: {},
   define: {
-    "APP_ENV": "development",
+    "APP_ENV": "dev",
+    //"TUIKE_API_HOST" : "/api",
     //"TUIKE_API_HOST" : "http://localhost:8000",
-    "TUIKE_API_HOST" : "https://tuike-api-test.herokuapp.com",
+    //"TUIKE_API_HOST" : "https://tuike-api-test.herokuapp.com",
     "TUIKE_WEB_HOST" : "http://localhost:3000",
   }
 });
