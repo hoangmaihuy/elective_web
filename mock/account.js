@@ -1,4 +1,3 @@
-import mockjs from 'mockjs';
 import { Result } from '../src/services/consts';
 
 const TestUID = 3;

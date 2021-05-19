@@ -1,7 +1,6 @@
 import Mock, {Random} from 'mockjs';
 import { Result } from '../src/services/consts';
 import CourseType from "../src/consts/CourseType";
-import SchoolList from "../src/consts/SchoolList";
 
 const TestCourseId = 1;
 const typeIds = Object.keys(CourseType);
@@ -19,10 +18,10 @@ const genCourseList = (size, type, schoolId) => {
       school_id: schoolId || Random.integer(1, 50),
       type: type || typeIds[Random.integer(0, typeIds.length-1)],
       review_count: Random.integer(0, 10),
-      recommend_score: Random.float(0, 5),
-      content_score: Random.float(0, 5),
-      work_score: Random.float(0, 5),
-      exam_score: Random.float(0, 5),
+      recommend_score: Random.float(0, 4),
+      content_score: Random.float(0, 4),
+      work_score: Random.float(0, 4),
+      exam_score: Random.float(0, 4),
       last_review: randomTimestamp(),
       create_time: randomTimestamp(),
     })
@@ -85,10 +84,10 @@ export default {
         school_id:  Random.integer(1, 50),
         type: typeIds[Random.integer(0, typeIds.length-1)],
         review_count: Random.integer(0, 10),
-        recommend_score: Random.float(0, 5),
-        content_score: Random.float(0, 5),
-        work_score: Random.float(0, 5),
-        exam_score: Random.float(0, 5),
+        recommend_score: Random.float(0, 4),
+        content_score: Random.float(0, 4),
+        work_score: Random.float(0, 4),
+        exam_score: Random.float(0, 4),
         last_review: randomTimestamp(),
         create_time: randomTimestamp(),
       }

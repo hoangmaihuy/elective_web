@@ -8,10 +8,10 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://localhost:8000',
+      target: 'https://tuike-api-test.herokuapp.com',
       changeOrigin: true,
       pathRewrite: {
-        '^/api': '/',
+        '^/api': '',
       },
     },
   },
@@ -20,7 +20,7 @@ export default {
       target: 'https://tuike-api-test.herokuapp.com',
       changeOrigin: true,
       pathRewrite: {
-        '^/api': '/',
+        '^/api': '',
       },
     },
   },
@@ -29,7 +29,7 @@ export default {
       target: 'your pre url',
       changeOrigin: true,
       pathRewrite: {
-        '^': '',
+        '^/api': '',
       },
     },
   },
