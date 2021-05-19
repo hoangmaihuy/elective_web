@@ -21,6 +21,6 @@ export async function getCourseReviews(courseId, pagination, params) {
 export async function interactReview(reviewId, action) {
   return postTuikeApi(TuikeReviewApi.INTERACT_REVIEW, {
     review_id: reviewId,
-    action: action === "like" ? 1 : 0
+    action,
   })
 }

@@ -3,8 +3,8 @@ import {Link} from "umi";
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { getCourseList } from './service';
-import SchoolList from '@/consts/school';
-import CourseType from "@/consts/courseType";
+import SchoolList from '@/consts/SchoolList';
+import CourseType from "@/consts/CourseType";
 
 const CourseList = () => {
   const actionRef = useRef();
