@@ -1,10 +1,10 @@
 import {getCourseInfo} from './service';
-import {Result} from '@/services/consts';
 import SchoolList from "@/consts/SchoolList";
 import CourseType from "@/consts/CourseType";
 import {getTeachersByCourse} from "@/pages/AddReview/service";
 import { getCourseReviews, interactReview } from './service';
 import ReviewInteraction from "@/consts/ReviewInteraction";
+import {Result} from "@/services/result";
 
 const Model = {
   namespace: 'courseDetail',

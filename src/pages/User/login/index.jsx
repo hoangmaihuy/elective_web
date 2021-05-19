@@ -5,7 +5,7 @@ import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-desi
 import { useIntl, connect, FormattedMessage } from 'umi';
 import { requestVerificationCode } from '@/services/login';
 import styles from './index.less';
-import { Result as ApiResult } from '@/services/consts';
+import {Result as ApiResult} from "@/services/result";
 
 const LoginMessage = ({ content }) => (
   <Alert

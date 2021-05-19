@@ -1,6 +1,7 @@
 import request from '@/utils/request';
 import {postTuikeApi} from "@/services/requests";
-import {TuikeCourseApi, Result} from "@/services/consts";
+import {TuikeCourseApi} from "@/services/api";
+import {Result} from "@/services/result";
 
 export async function queryRule(params) {
   return request('/api/rule', {

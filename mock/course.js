@@ -1,6 +1,6 @@
-import Mock, {Random} from 'mockjs';
-import { Result } from '../src/services/consts';
+import {Random} from 'mockjs';
 import CourseType from "../src/consts/CourseType";
+import {Result} from "../src/services/result";
 
 const TestCourseId = 1;
 const typeIds = Object.keys(CourseType);

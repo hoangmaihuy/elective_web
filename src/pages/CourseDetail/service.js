@@ -1,5 +1,5 @@
 import {postTuikeApi} from "@/services/requests";
-import { TuikeCourseApi, TuikeReviewApi } from "@/services/consts";
+import { TuikeCourseApi, TuikeReviewApi } from "@/services/api";
 
 export async function getCourseInfo(courseId) {
   return postTuikeApi(TuikeCourseApi.GET_COURSE_INFO, {

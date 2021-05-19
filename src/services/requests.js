@@ -1,6 +1,7 @@
-import {TuikeApi, TuikeApiHost, Result} from "./consts"
+import {TuikeApi, TuikeApiHost} from "./api"
 import {getToken} from '@/utils/authority';
 import request from 'umi-request';
+import {Result} from "@/services/result";
 
 const TIMEOUT = 10000;
 

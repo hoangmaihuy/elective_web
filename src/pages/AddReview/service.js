@@ -1,6 +1,6 @@
 import request from 'umi-request';
 import {getTuikeApi, postTuikeApi} from "@/services/requests";
-import {TuikeCourseApi, TuikeTeacherApi, TuikeReviewApi} from "@/services/consts";
+import {TuikeCourseApi, TuikeTeacherApi, TuikeReviewApi} from "@/services/api";
 import {getAllSchoolIds} from "@/consts/SchoolList";
 
 export async function fakeSubmitForm(params) {

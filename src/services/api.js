@@ -1,9 +1,3 @@
-const { REACT_APP_ENV } = process.env;
-const ConfigHost = {
-  dev: '/api',
-  test: "https://tuike-api-test.herokuapp.com",
-}
-const TUIKE_API_HOST = ConfigHost[REACT_APP_ENV || 'dev'];
 export const TuikeApiHost = TUIKE_API_HOST;
 
 const TEST_API_HOST = TUIKE_API_HOST + "/test";
@@ -36,15 +30,5 @@ export const TuikeReviewApi = {
 	ADD_REVIEW : REVIEW_API_HOST + "/add_review",
   GET_COURSE_REVIEWS : REVIEW_API_HOST + "/get_course_reviews",
   INTERACT_REVIEW : REVIEW_API_HOST + "/interact_review",
-}
-
-export const Result = {
-	SUCCESS: "success",
-	ERROR_PARAMS: "error_params",
-	ERROR_REQUEST: "error_request",
-	ERROR_INVALID_EMAIL: "error_invalid_email",
-	ERROR_AUTHORIZATION: "error_authorization",
-  ERROR_COURSE_NOT_FOUND: "error_course_not_found",
-  ERROR_VERIFICATION_CODE: "error_verification_code",
 }
 

@@ -2,13 +2,13 @@ import React, { useState, useEffect, createElement } from 'react';
 import {Button, Result, Rate, Descriptions, Tooltip } from "antd";
 import Skeleton from '@ant-design/pro-skeleton';
 import {connect, history, useParams} from "umi";
-import {Result as ApiResult} from '@/services/consts';
 import { GridContent, PageContainer } from '@ant-design/pro-layout';
 import { Card, Col, Divider, Row } from 'antd';
 import CourseInfo from "@/pages/CourseDetail/components/CourseInfo";
 import TeacherTags from "@/pages/CourseDetail/components/TeacherTags";
 import CourseReviews from "@/pages/CourseDetail/components/CourseReviews";
 import ReviewInteraction from "@/consts/ReviewInteraction";
+import {Result as ApiResult} from "@/services/result";
 
 
 const CourseDetail = (props) => {
