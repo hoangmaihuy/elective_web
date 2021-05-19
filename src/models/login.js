@@ -4,8 +4,8 @@ import { login } from '@/services/login';
 import {setToken, deleteToken, setAuthority, removeAuthority} from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
-import {Result as ApiResult} from '@/services/consts'
 import getErrorMessage from '@/services/error'
+import {Result as ApiResult} from "@/services/result";
 
 const Model = {
   namespace: 'login',

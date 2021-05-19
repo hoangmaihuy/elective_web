@@ -15,22 +15,4 @@ export default {
       },
     },
   },
-  test: {
-    '/api/': {
-      target: 'https://tuike-api-test.herokuapp.com',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': '',
-      },
-    },
-  },
-  pre: {
-    '/api/': {
-      target: 'your pre url',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': '',
-      },
-    },
-  },
 };

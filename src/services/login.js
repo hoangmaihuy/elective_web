@@ -1,4 +1,4 @@
-import {TuikeAccountApi} from './consts'
+import {TuikeAccountApi} from './api'
 import request from 'umi-request';
 import {postTuikeApi} from './requests';
 

@@ -1,6 +1,6 @@
 import request from 'umi-request';
 import {getTuikeApi} from './requests';
-import {TuikeAccountApi} from './consts'
+import {TuikeAccountApi} from './api'
 
 export async function query() {
   return request('/api/users');

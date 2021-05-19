@@ -1,4 +1,4 @@
-import { Result } from '../src/services/consts';
+import {Result} from "../src/services/result";
 
 const TestUID = 3;
 const TestEmail = 'test_example@pku.edu.cn';

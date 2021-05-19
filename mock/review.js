@@ -1,6 +1,5 @@
-import Mock, {Random} from 'mockjs';
-import { Result } from '../src/services/consts';
-import CourseType from "../src/consts/CourseType";
+import {Random} from 'mockjs';
+import {Result} from "../src/services/result";
 
 const randomTimestamp = () => new Date(Random.datetime()).getTime();
 

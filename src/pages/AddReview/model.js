@@ -1,5 +1,5 @@
 import { addReview, getCoursesBySchool, getTeachersByCourse } from './service';
-import {Result} from '@/services/consts';
+import {Result} from "@/services/result";
 
 const Model = {
   namespace: 'addReviewForm',

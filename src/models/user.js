@@ -1,7 +1,7 @@
 import { getUserInfo } from '@/services/user';
-import {Result as ApiResult} from "@/services/consts";
 import {message} from "antd";
 import getErrorMessage from "@/services/error";
+import {Result as ApiResult} from "@/services/result";
 const UserModel = {
   namespace: 'user',
   state: {

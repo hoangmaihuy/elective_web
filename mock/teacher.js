@@ -1,5 +1,5 @@
 import {Random} from 'mockjs';
-import { Result } from '../src/services/consts';
+import {Result} from "../src/services/result";
 
 export default {
   'POST /api/teacher/get_teachers_by_course' : (req, res) => {
