@@ -21,7 +21,6 @@ export default defineConfig({
   webpack5: {},
   define: {
     "APP_ENV": "dev",
-    "TUIKE_API_HOST" : "/api",
     "TUIKE_WEB_HOST" : "http://localhost:3000",
   }
 });

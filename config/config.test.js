@@ -21,7 +21,6 @@ export default defineConfig({
   webpack5: {},
   define: {
     "APP_ENV": "test",
-    "TUIKE_API_HOST" : "https://tuike-api-test.herokuapp.com",
     "TUIKE_WEB_HOST" : "https://tuike-test.herokuapp.com",
   }
 });
