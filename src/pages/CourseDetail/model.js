@@ -1,9 +1,10 @@
 import {getCourseInfo} from './service';
 import {Result} from '@/services/consts';
-import SchoolList from "@/consts/school";
-import CourseType from "@/consts/courseType";
+import SchoolList from "@/consts/SchoolList";
+import CourseType from "@/consts/CourseType";
 import {getTeachersByCourse} from "@/pages/AddReview/service";
 import { getCourseReviews, interactReview } from './service';
+import ReviewInteraction from "@/consts/ReviewInteraction";
 
 const Model = {
   namespace: 'courseDetail',
@@ -148,20 +149,23 @@ const Model = {
     },
 
     changeReviewInteract(state, {payload}) {
-      const {userId, reviewId, action} = payload;
+      const { reviewId, action} = payload;
       const newCourseReviews =  state.courseReviews.map((review) => {
-        if (review.id !== reviewId)
+        if (review.id !== reviewId || review.interaction === action)
           return review;
         let newReview = {
           ...review
         }
-        if (action === "like") {
-          newReview.likes.push(userId);
-          newReview.dislikes = newReview.dislikes.filter((id) => (id !== userId));
-        } else {
-          newReview.dislikes.push(userId);
-          newReview.likes = newReview.likes.filter((id) => (id !== userId));
-        }
+        if (review.interaction === ReviewInteraction.LIKE)
+          newReview.likes -= 1;
+        else if (review.interaction === ReviewInteraction.DISLIKE)
+          newReview.dislikes -= 1;
+        newReview.interaction = action;
+
+        if (action === ReviewInteraction.LIKE)
+          newReview.likes += 1;
+        else if (action === ReviewInteraction.DISLIKE)
+          newReview.dislikes += 1;
         return newReview;
       })
       return {

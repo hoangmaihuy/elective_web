@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Form, Button, Divider, Input, Select, TreeSelect } from 'antd';
 import { connect } from 'umi';
 import styles from './index.less';
-import SchoolList from "@/consts/school";
+import SchoolList from "@/consts/SchoolList";
 
 const { Option, OptGroup } = Select;
 const { TreeNode } = TreeSelect;
