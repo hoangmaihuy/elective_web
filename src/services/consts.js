@@ -1,3 +1,9 @@
+const { REACT_APP_ENV } = process.env;
+const ConfigHost = {
+  dev: '/api',
+  test: "https://tuike-api-test.herokuapp.com",
+}
+const TUIKE_API_HOST = ConfigHost[REACT_APP_ENV || 'dev'];
 export const TuikeApiHost = TUIKE_API_HOST;
 
 const TEST_API_HOST = TUIKE_API_HOST + "/test";
