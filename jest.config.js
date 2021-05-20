@@ -7,4 +7,9 @@ module.exports = {
     localStorage: null,
   },
   testPathIgnorePatterns: ["config"],
+  coveragePathIgnorePatterns: [
+    "/config", "/src/locales",
+    "/src/.umi", "/src/.umi-production",
+    "/src/assets", "/src/consts",
+  ]
 };
