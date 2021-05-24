@@ -51,6 +51,12 @@ export default [
                 path: '/course/:courseId',
                 component: './CourseDetail'
               },
+              // {
+              //   name: '教师测评',
+              //   hideInMenu: true,
+              //   path: '/teacher/:teacherId',
+              //   component: './TeacherDetail',
+              // },
               {
                 component: './404',
               },
