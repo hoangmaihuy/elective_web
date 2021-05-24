@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { Form, Button, Divider, Input, Rate} from 'antd';
+import { Form, Button, Divider, Input} from 'antd';
 import { connect } from 'umi';
 import styles from './index.less';
+import {RecommendRate, ExamRate, WorkRate, ContentRate} from "@/pages/components/ScoreRate";
 
 const formItemLayout = {
   labelCol: {
@@ -86,7 +87,7 @@ const ReviewForm = (props) => {
           name="recommendScore"
           initialValue={3}
         >
-          <Rate allowHalf />
+          <RecommendRate/>
         </Form.Item>
 
         <Form.Item
@@ -94,14 +95,14 @@ const ReviewForm = (props) => {
           name="contentScore"
           initialValue={3}
         >
-          <Rate allowHalf/>
+          <ContentRate/>
         </Form.Item>
         <Form.Item
           label="工作量"
           name="workScore"
           initialValue={3}
         >
-          <Rate allowHalf />
+          <WorkRate/>
         </Form.Item>
 
         <Form.Item
@@ -109,7 +110,7 @@ const ReviewForm = (props) => {
           name="examScore"
           initialValue={3}
         >
-          <Rate allowHalf />
+          <ExamRate/>
         </Form.Item>
 
         <Form.Item

@@ -1,12 +1,10 @@
-import styles from "@/pages/CourseDetail/style.less";
 import {Col, Descriptions, Divider, Row} from "antd";
 import {roundToHalf} from "@/utils/utils";
-import {BookOutlined, HomeOutlined, NumberOutlined, ScheduleOutlined} from "@ant-design/icons";
 import React from "react";
 import {ContentRate, RecommendRate, WorkRate, ExamRate} from "@/pages/components/ScoreRate";
+import styles from "@/pages/TeacherDetail/style.less";
 
-
-const CourseInfo = (props) => {
+const TeacherInfo = (props) => {
   const rateLabelStyle = {
     marginTop: "8px",
     width: "25%",
@@ -49,27 +47,8 @@ const CourseInfo = (props) => {
           </Descriptions.Item>
         </Descriptions>
       </div>
-      <Divider dashed/>
-      <Row>
-        <Col span={12}>
-          <NumberOutlined className={styles.infoIcon}/>
-          {data.courseNo}
-        </Col>
-        <Col span={12}>
-          <HomeOutlined className={styles.infoIcon}/>
-          {data.schoolName}
-        </Col>
-        <Col span={12}>
-          <BookOutlined className={styles.infoIcon}/>
-          {data.typeName}
-        </Col>
-        <Col span={12}>
-          <ScheduleOutlined className={styles.infoIcon}/>
-          {`${data.credit} 学分`}
-        </Col>
-      </Row>
     </div>
   )
 }
 
-export default CourseInfo;
+export default TeacherInfo;

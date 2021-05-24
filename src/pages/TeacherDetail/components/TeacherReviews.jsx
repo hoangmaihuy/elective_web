@@ -1,6 +1,6 @@
 import {Descriptions, List, Tooltip} from "antd";
-import moment from "moment";
 import {Link} from 'umi';
+import moment from "moment";
 import LikeButton from "@/pages/components/LikeButton";
 import DislikeButton from "@/pages/components/DislikeButton";
 import styles from "@/pages/CourseDetail/style.less";
@@ -9,7 +9,7 @@ import ReviewInteraction from "@/consts/ReviewInteraction";
 import {RecommendRate, ExamRate, ContentRate, WorkRate} from "@/pages/components/ScoreRate";
 
 
-const CourseReviews = (props) => {
+const TeacherReviews = (props) => {
   const { data, pagination, onPaginationChange, onLikeReview, onDislikeReview } = props;
 
   const renderReview = (review) => {
@@ -37,9 +37,9 @@ const CourseReviews = (props) => {
       <List.Item actions={actions}>
         <List.Item.Meta title={<b>{review.title}</b>} description={reviewMoment}/>
         <Descriptions column={{xs: 1, sm: 2}} labelStyle={{fontWeight: "bold"}}>
-          <Descriptions.Item label={"任课老师"}>
-            <Link to={`/teacher/${review.teacher_id}`}>
-              {review.teacher_name}
+          <Descriptions.Item label={"课程名"}>
+            <Link to={`/course/${review.course_id}`}>
+              {review.course_name}
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label={"学期"}>{review.semester}</Descriptions.Item>
@@ -81,4 +81,4 @@ const CourseReviews = (props) => {
   )
 }
 
-export default CourseReviews;
+export default TeacherReviews;

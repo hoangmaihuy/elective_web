@@ -16,6 +16,7 @@ class PuppeteerEnvironment extends NodeEnvironment {
 
   async setup() {
     const browser = await getBrowser();
+
     const page = await browser.newPage();
     this.global.browser = browser;
     this.global.page = page;

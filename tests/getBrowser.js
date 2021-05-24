@@ -8,16 +8,16 @@ const getBrowser = async () => {
     const puppeteer = require('puppeteer');
     const browser = await puppeteer.launch({
       args: [
-        '--disable-gpu',
-        '--disable-dev-shm-usage',
-        '--no-first-run',
-        '--no-zygote',
-        '--no-sandbox',
+         '--disable-gpu',
+         '--disable-dev-shm-usage',
+         '--no-first-run',
+         '--no-zygote',
+         '--no-sandbox',
       ],
     });
     return browser;
   } catch (error) {
-    // console.log(error)
+    console.log(error)
   }
 
   try {

@@ -16,5 +16,21 @@ export default {
         teachers,
       }
     })
-  }
+  },
+
+  'POST /api/teacher/get_teacher_info' : (req, res) => {
+    const {teacher_id} = req.body;
+    res.send({
+      result: Result.SUCCESS,
+      reply: {
+        id: teacher_id,
+        name: Random.cname(),
+        review_count: Random.integer(1, 50),
+        recommend_score: Random.float(0, 4),
+        content_score: Random.float(0, 4),
+        work_score: Random.float(0, 4),
+        exam_score: Random.float(0, 4),
+      }
+    })
+  },
 }

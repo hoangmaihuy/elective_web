@@ -1,9 +1,15 @@
 module.exports = {
-  testURL: 'http://localhost:8000',
+  testURL: 'http://localhost:3000',
   testEnvironment: './tests/PuppeteerEnvironment',
   verbose: false,
   globals: {
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: false,
     localStorage: null,
   },
+  testPathIgnorePatterns: ["config"],
+  coveragePathIgnorePatterns: [
+    "/config", "/src/locales",
+    "/src/.umi", "/src/.umi-production",
+    "/src/assets", "/src/consts",
+  ]
 };

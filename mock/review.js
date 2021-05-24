@@ -46,6 +46,18 @@ export default {
     })
   },
 
+  'POST /api/review/get_teacher_reviews': (req, res) => {
+    const { teacher_id, page_size } = req.body;
+    let reviews = genReviews(page_size, null, teacher_id, null);
+    res.send({
+      result: Result.SUCCESS,
+      reply: {
+        total: Random.integer(page_size, 50),
+        reviews: reviews,
+      }
+    })
+  },
+
   'POST /api/review/interact_review': {
     result: Result.SUCCESS,
   }

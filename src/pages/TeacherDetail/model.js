@@ -1,24 +1,15 @@
-import {getCourseInfo} from './service';
-import SchoolList from "@/consts/SchoolList";
-import CourseType from "@/consts/CourseType";
+import {getTeacherInfo, getTeacherReviews} from './service';
 import {getTeachersByCourse} from "@/pages/AddReview/service";
-import { getCourseReviews} from './service';
+import {interactReview} from "@/services/review";
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import {Result} from "@/services/result";
-import {interactReview} from "@/services/review";
 
 const Model = {
-  namespace: 'courseDetail',
+  namespace: 'teacherDetail',
   state: {
     status: undefined,
-    courseInfo: {},
-    teacherList: [],
-    courseReviews: [],
-    reviewParams: {
-      teacherId: 0,
-      semester: 'all',
-      sortedBy: 'latest',
-    },
+    teacherInfo: {},
+    teacherReviews: [],
     pagination: {
       total: 0,
       current: 1,
@@ -26,13 +17,13 @@ const Model = {
     }
   },
   effects: {
-    *fetchCourseInfo({payload}, { call, put }) {
-      const {result, reply} = yield call(getCourseInfo, payload);
+    *fetchTeacherInfo({payload}, { call, put }) {
+      const {result, reply} = yield call(getTeacherInfo, payload);
       yield put({
-        type: 'saveCourseInfo',
+        type: 'saveTeacherInfo',
         payload: {
           status: result,
-          courseInfo: reply,
+          teacherInfo: reply,
         },
       });
     },
@@ -46,12 +37,12 @@ const Model = {
         })
       }
     },
-    *fetchCourseReviews({payload}, { call, put }) {
-      const { courseId, pagination, params } = payload;
-      const { result, reply } = yield call(getCourseReviews, courseId, pagination, params)
+    *fetchTeacherReviews({payload}, { call, put }) {
+      const { teacherId, pagination } = payload;
+      const { result, reply } = yield call(getTeacherReviews, teacherId, pagination)
       if (result === Result.SUCCESS) {
         yield put({
-          type: 'saveCourseReviews',
+          type: 'saveTeacherReviews',
           payload: reply,
         })
       }
@@ -66,17 +57,11 @@ const Model = {
     }
   },
   reducers: {
-    resetState() {
+    resetState(state) {
       return {
         status: undefined,
-        courseInfo: {},
-        teacherList: [],
-        courseReviews: [],
-        reviewParams: {
-          teacherId: 0,
-          semester: 'all',
-          sortedBy: 'latest',
-        },
+        teacherInfo: {},
+        teacherReviews: [],
         pagination: {
           total: 0,
           current: 1,
@@ -85,43 +70,34 @@ const Model = {
       }
     },
 
-    saveCourseInfo(state, {payload}) {
-      const {status, courseInfo} = payload;
+    saveTeacherInfo(state, {payload}) {
+      const {status, teacherInfo} = payload;
       if (status !== Result.SUCCESS)
         return {
           ...state,
           status,
-          courseInfo: {},
+          teacherInfo: {},
         }
 
       return {
         ...state,
         status,
-        courseInfo: {
-          id: courseInfo.course_id,
-          name: courseInfo.name,
-          courseNo: courseInfo.course_no,
-          type: courseInfo.type,
-          typeName: CourseType[courseInfo.type],
-          schoolName: SchoolList[courseInfo.school_id],
-          credit: courseInfo.credit,
-          reviewCount: courseInfo.review_count,
-          recommendScore: courseInfo.recommend_score.toFixed(2),
-          contentScore: courseInfo.content_score.toFixed(2),
-          workScore: courseInfo.work_score.toFixed(2),
-          examScore: courseInfo.exam_score.toFixed(2),
+        teacherInfo: {
+          id: teacherInfo.id,
+          name: teacherInfo.name,
+          reviewCount: teacherInfo.review_count,
+          recommendScore: teacherInfo.recommend_score.toFixed(2),
+          contentScore: teacherInfo.content_score.toFixed(2),
+          workScore: teacherInfo.work_score.toFixed(2),
+          examScore: teacherInfo.exam_score.toFixed(2),
         },
       }
     },
 
-    saveTeacherList(state, {payload}) {
-      return {...state, teacherList: payload}
-    },
-
-    saveCourseReviews(state, {payload}) {
+    saveTeacherReviews(state, {payload}) {
       return {
         ...state,
-        courseReviews: payload.reviews,
+        teacherReviews: payload.reviews,
         pagination: {
           ...state.pagination,
           total: payload.total,
@@ -139,19 +115,9 @@ const Model = {
       }
     },
 
-    changeReviewParams(state, {payload}) {
-      return {
-        ...state,
-        reviewParams: {
-          ...state.reviewParams,
-          ...payload
-        }
-      }
-    },
-
     changeReviewInteract(state, {payload}) {
       const { reviewId, action} = payload;
-      const newCourseReviews =  state.courseReviews.map((review) => {
+      const newCourseReviews =  state.teacherReviews.map((review) => {
         if (review.id !== reviewId || review.interaction === action)
           return review;
         let newReview = {
@@ -171,7 +137,7 @@ const Model = {
       })
       return {
         ...state,
-        courseReviews: newCourseReviews,
+        teacherReviews: newCourseReviews,
       }
     },
   },
