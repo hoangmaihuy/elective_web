@@ -23,12 +23,14 @@ const TEACHER_API_HOST = TUIKE_API_HOST + "/teacher";
 export const TuikeTeacherApi = {
   GET_TEACHER_LIST : TEACHER_API_HOST + "/get_teacher_list",
   GET_TEACHERS_BY_COURSE : TEACHER_API_HOST + "/get_teachers_by_course",
+  GET_TEACHER_INFO : TEACHER_API_HOST + "/get_teacher_info",
 }
 
 const REVIEW_API_HOST = TUIKE_API_HOST + "/review";
 export const TuikeReviewApi = {
 	ADD_REVIEW : REVIEW_API_HOST + "/add_review",
   GET_COURSE_REVIEWS : REVIEW_API_HOST + "/get_course_reviews",
+  GET_TEACHER_REVIEWS : REVIEW_API_HOST + "/get_teacher_reviews",
   INTERACT_REVIEW : REVIEW_API_HOST + "/interact_review",
 }
 

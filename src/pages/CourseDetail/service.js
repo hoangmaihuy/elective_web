@@ -1,5 +1,5 @@
 import {postTuikeApi} from "@/services/requests";
-import { TuikeCourseApi, TuikeReviewApi } from "@/services/api";
+import {TuikeCourseApi, TuikeReviewApi} from "@/services/api";
 
 export async function getCourseInfo(courseId) {
   return postTuikeApi(TuikeCourseApi.GET_COURSE_INFO, {
@@ -18,9 +18,3 @@ export async function getCourseReviews(courseId, pagination, params) {
   return postTuikeApi(TuikeReviewApi.GET_COURSE_REVIEWS, data);
 }
 
-export async function interactReview(reviewId, action) {
-  return postTuikeApi(TuikeReviewApi.INTERACT_REVIEW, {
-    review_id: reviewId,
-    action,
-  })
-}
