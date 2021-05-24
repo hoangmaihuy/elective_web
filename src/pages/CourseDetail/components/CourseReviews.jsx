@@ -1,5 +1,6 @@
 import {Descriptions, List, Tooltip} from "antd";
 import moment from "moment";
+import {Link} from 'umi';
 import LikeButton from "@/pages/components/LikeButton";
 import DislikeButton from "@/pages/components/DislikeButton";
 import styles from "@/pages/CourseDetail/style.less";
@@ -36,7 +37,11 @@ const CourseReviews = (props) => {
       <List.Item actions={actions}>
         <List.Item.Meta title={<b>{review.title}</b>} description={reviewMoment}/>
         <Descriptions column={{xs: 1, sm: 2}} labelStyle={{fontWeight: "bold"}}>
-          <Descriptions.Item label={"任课老师"}> {review.teacher_name} </Descriptions.Item>
+          <Descriptions.Item label={"任课老师"}>
+            <Link to={`/teacher/${review.teacher_id}`}>
+              {review.teacher_name}
+            </Link>
+          </Descriptions.Item>
           <Descriptions.Item label={"学期"}>{review.semester}</Descriptions.Item>
         </Descriptions>
 
