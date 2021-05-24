@@ -29,6 +29,7 @@ export const TuikeTeacherApi = {
 const REVIEW_API_HOST = TUIKE_API_HOST + "/review";
 export const TuikeReviewApi = {
 	ADD_REVIEW : REVIEW_API_HOST + "/add_review",
+  GET_LATEST_REVIEWS: REVIEW_API_HOST + "/get_latest_reviews",
   GET_COURSE_REVIEWS : REVIEW_API_HOST + "/get_course_reviews",
   GET_TEACHER_REVIEWS : REVIEW_API_HOST + "/get_teacher_reviews",
   INTERACT_REVIEW : REVIEW_API_HOST + "/interact_review",
