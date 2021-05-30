@@ -22,7 +22,7 @@ const Model = {
       courseType: 500,
       courses: [],
     },
-    politicsRank: { // 政治课
+    gymRank: { // 体育课
       courses: []
     }
   },
@@ -46,11 +46,11 @@ const Model = {
         })
     },
 
-    *fetchPoliticsRank({payload}, {call, put}) {
+    *fetchGymRank({payload}, {call, put}) {
       const {result, reply} = yield call(getCourseRank, payload);
       if (result === Result.SUCCESS)
         yield put({
-          type: 'savePoliticsRank',
+          type: 'saveGymRank',
           payload: reply,
         })
     },
@@ -131,11 +131,11 @@ const Model = {
       }
     },
 
-    savePoliticsRank(state, {payload}) {
+    saveGymRank(state, {payload}) {
       return {
         ...state,
-        politicsRank: {
-          ...state.politicsRank,
+        gymRank: {
+          ...state.gymRank,
           courses: payload.courses,
         }
       }
@@ -160,6 +160,26 @@ const Model = {
         }
       }
     },
+
+    changeSpecialitySchoolId(state, {payload}) {
+      return {
+        ...state,
+        specialityRank: {
+          ...state.specialityRank,
+          schoolId: payload,
+        }
+      }
+    },
+
+    changeGeneralElectiveType(state, {payload}) {
+      return {
+        ...state,
+        generalElectiveRank: {
+          ...state.generalElectiveRank,
+          courseType: parseInt(payload, 10),
+        }
+      }
+    }
   },
 }
 

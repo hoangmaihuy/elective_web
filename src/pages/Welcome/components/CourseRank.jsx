@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'antd';
+import {Table, Card} from 'antd';
 import {Link} from 'umi';
 
 const columns = [
@@ -21,15 +21,23 @@ const columns = [
 ];
 
 export default function CourseRank(props) {
-  const {dataSource, loading} = props;
+  const { title, dataSource, loading, extra } = props;
   return (
-    <Table
+    <Card
+      title={title}
       size={'small'}
-      pagination={false}
-      dataSource={dataSource.map((record, index) => ({...record, rank: index+1}))}
-      loading={loading}
-      columns={columns}
       style={{marginBottom: '24px'}}
-    />
+      headStyle={{fontWeight: 'bold'}}
+      extra={extra}
+    >
+      <Table
+        showHeader={false}
+        size={'small'}
+        pagination={false}
+        dataSource={dataSource.map((record, index) => ({...record, rank: index+1}))}
+        loading={loading}
+        columns={columns}
+      />
+    </Card>
   )
 }
