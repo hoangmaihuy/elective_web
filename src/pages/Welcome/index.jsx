@@ -174,7 +174,7 @@ const Welcome = (props) => {
     <PageContainer>
       <GridContent>
         <Row gutter={24}>
-          <Col lg={6} md={12}>
+          <Col lg={6} md={12} sm={12} xs={24}>
             <CourseRank
               title={"专业课排行"}
               extra={schoolSelector}
@@ -182,14 +182,14 @@ const Welcome = (props) => {
               loading={fetchingSpecialityRank}
             />
           </Col>
-          <Col lg={6} md={12}>
+          <Col lg={6} md={12} sm={12} xs={24}>
             <CourseRank
               title={"公选课排行"}
               dataSource={publicChoiceRank.courses}
               loading={fetchingPublicChoiceRank}
             />
           </Col>
-          <Col lg={6} md={12}>
+          <Col lg={6} md={12} sm={12} xs={24}>
             <CourseRank
               title={"通选课排行"}
               extra={generalElectiveSelector}
@@ -197,7 +197,7 @@ const Welcome = (props) => {
               loading={fetchingGeneralElectiveRank}
             />
           </Col>
-          <Col lg={6} md={12}>
+          <Col lg={6} md={12} sm={12} xs={24}>
             <CourseRank
               title={"体育排行"}
               dataSource={gymRank.courses}
@@ -206,7 +206,7 @@ const Welcome = (props) => {
           </Col>
         </Row>
         <Row gutter={24}>
-          <Col lg={24} md={24}>
+          <Col lg={24} md={24} sm={24} xs={24}>
             <Card
               bordered
               title={"最新评测"}
