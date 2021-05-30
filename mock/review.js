@@ -60,5 +60,17 @@ export default {
 
   'POST /api/review/interact_review': {
     result: Result.SUCCESS,
-  }
+  },
+
+  'POST /api/review/get_latest_reviews': (req, res) => {
+    const { size } = req.body;
+    let reviews = genReviews(size, null, null, null);
+    res.send({
+      result: Result.SUCCESS,
+      reply: {
+        total: Random.integer(size, 50),
+        reviews: reviews,
+      }
+    })
+  },
 }

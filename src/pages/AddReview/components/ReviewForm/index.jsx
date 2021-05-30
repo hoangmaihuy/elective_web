@@ -73,7 +73,16 @@ const ReviewForm = (props) => {
           label="测评内容"
           name="content"
         >
-          <Input.TextArea showCount allowClear autoSize={{minRows: 8}}/>
+          <Input.TextArea
+            showCount
+            allowClear
+            autoSize={{minRows: 8}}
+            defaultValue={
+              '课程听感:\n' +
+              '作业/任务量:\n' +
+              '关于考试:'
+            }
+            />
         </Form.Item>
 
         <Divider

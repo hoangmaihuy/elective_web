@@ -17,6 +17,7 @@ export const TuikeCourseApi = {
   GET_COURSE_LIST : COURSE_API_HOST + "/get_course_list",
   GET_COURSES_BY_SCHOOL : COURSE_API_HOST + "/get_courses_by_school",
   GET_COURSE_INFO : COURSE_API_HOST + "/get_course_info",
+  GET_COURSE_RANK : COURSE_API_HOST + "/get_course_rank",
 }
 
 const TEACHER_API_HOST = TUIKE_API_HOST + "/teacher";
@@ -29,6 +30,7 @@ export const TuikeTeacherApi = {
 const REVIEW_API_HOST = TUIKE_API_HOST + "/review";
 export const TuikeReviewApi = {
 	ADD_REVIEW : REVIEW_API_HOST + "/add_review",
+  GET_LATEST_REVIEWS: REVIEW_API_HOST + "/get_latest_reviews",
   GET_COURSE_REVIEWS : REVIEW_API_HOST + "/get_course_reviews",
   GET_TEACHER_REVIEWS : REVIEW_API_HOST + "/get_teacher_reviews",
   INTERACT_REVIEW : REVIEW_API_HOST + "/interact_review",
