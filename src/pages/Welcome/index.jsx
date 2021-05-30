@@ -3,12 +3,18 @@ import {GridContent, PageContainer} from '@ant-design/pro-layout';
 import styles from './style.less';
 import {Card, Col, Row} from "antd";
 import LatestReviews from "@/pages/Welcome/components/LatestReviews";
+import CourseRank from "@/pages/Welcome/components/CourseRank";
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import {connect} from "umi";
 
+const RankSize = 5;
+
 const Welcome = (props) => {
   const { dispatch, userId, pagination, latestReviews, fetchingLatestReviews } = props;
-  console.log("pagination", pagination);
+  const { specialityRank, fetchingSpecialityRank } = props;
+  const { publicChoiceRank, fetchingPublicChoiceRank } = props;
+  const { generalElectiveRank, fetchingGeneralElectiveRank } = props;
+  const { politicsRank, fetchingPoliticsRank } = props;
 
   useEffect(() => {
     if (dispatch) {
@@ -21,6 +27,55 @@ const Welcome = (props) => {
       })
     }
   }, [pagination.current, pagination.pageSize])
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: "welcome/fetchSpecialityRank",
+        payload: {
+          course_type: 100,
+          school_id: specialityRank.schoolId,
+          rank_size: RankSize,
+        }
+      })
+    }
+  }, [specialityRank.schoolId])
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: "welcome/fetchPublicChoiceRank",
+        payload: {
+          course_type: 600,
+          rank_size: RankSize,
+        }
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: "welcome/fetchGeneralElectiveRank",
+        payload: {
+          course_type: generalElectiveRank.courseType,
+          rank_size: RankSize,
+        }
+      })
+    }
+  }, [generalElectiveRank.courseType])
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: "welcome/fetchPoliticsRank",
+        payload: {
+          course_type: 200,
+          rank_size: RankSize,
+        }
+      })
+    }
+  }, [])
 
   const onPaginationChange = (page, pageSize) => {
     dispatch({
@@ -64,6 +119,32 @@ const Welcome = (props) => {
     <PageContainer>
       <GridContent>
         <Row gutter={24}>
+          <Col lg={6} md={12}>
+            <CourseRank
+              dataSource={specialityRank.courses}
+              loading={fetchingSpecialityRank}
+            />
+          </Col>
+          <Col lg={6} md={12}>
+            <CourseRank
+              dataSource={publicChoiceRank.courses}
+              loading={fetchingPublicChoiceRank}
+            />
+          </Col>
+          <Col lg={6} md={12}>
+            <CourseRank
+              dataSource={generalElectiveRank.courses}
+              loading={fetchingGeneralElectiveRank}
+            />
+          </Col>
+          <Col lg={6} md={12}>
+            <CourseRank
+              dataSource={politicsRank.courses}
+              loading={fetchingPoliticsRank}
+            />
+          </Col>
+        </Row>
+        <Row gutter={24}>
           <Col lg={17} md={24}>
             <Card
               bordered
@@ -87,7 +168,7 @@ const Welcome = (props) => {
                 marginBottom: 24,
               }}
             >
-              课程排行
+              数据
             </Card>
           </Col>
         </Row>
@@ -102,4 +183,12 @@ export default connect(({ loading, welcome, user }) => ({
   pagination: welcome.pagination,
   latestReviews: welcome.latestReviews,
   fetchingLatestReviews: loading.effects['welcome/fetchLatestReviews'],
+  specialityRank: welcome.specialityRank,
+  fetchingSpecialityRank: loading.effects["welcome/fetchSpecialityRank"],
+  publicChoiceRank: welcome.publicChoiceRank,
+  fetchingPublicChoiceRank: loading.effects["welcome/fetchPublicChoiceRank"],
+  generalElectiveRank: welcome.generalElectiveRank,
+  fetchingGeneralElectiveRank: loading.effects["welcome/fetchGeneralElectiveRank"],
+  politicsRank: welcome.politicsRank,
+  fetchingPoliticsRank: loading.effects["welcome/fetchPoliticsRank"],
 }))(Welcome);

@@ -17,6 +17,7 @@ export const TuikeCourseApi = {
   GET_COURSE_LIST : COURSE_API_HOST + "/get_course_list",
   GET_COURSES_BY_SCHOOL : COURSE_API_HOST + "/get_courses_by_school",
   GET_COURSE_INFO : COURSE_API_HOST + "/get_course_info",
+  GET_COURSE_RANK : COURSE_API_HOST + "/get_course_rank",
 }
 
 const TEACHER_API_HOST = TUIKE_API_HOST + "/teacher";

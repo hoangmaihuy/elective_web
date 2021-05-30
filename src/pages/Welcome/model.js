@@ -1,4 +1,4 @@
-import {getLatestReviews} from "@/pages/Welcome/service";
+import {getLatestReviews, getCourseRank} from "@/pages/Welcome/service";
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import {Result} from "@/services/result";
 
@@ -19,10 +19,10 @@ const Model = {
       courses: []
     },
     generalElectiveRank: { // 通选课
-      courseType: 0,
+      courseType: 500,
       courses: [],
     },
-    politicsRank: {
+    politicsRank: { // 政治课
       courses: []
     }
   },
@@ -35,7 +35,43 @@ const Model = {
           type: 'saveLatestReviews',
           payload: reply,
         })
-    }
+    },
+
+    *fetchSpecialityRank({payload}, {call, put}) {
+      const {result, reply} = yield call(getCourseRank, payload);
+      if (result === Result.SUCCESS)
+        yield put({
+          type: 'saveSpecialityRank',
+          payload: reply,
+        })
+    },
+
+    *fetchPoliticsRank({payload}, {call, put}) {
+      const {result, reply} = yield call(getCourseRank, payload);
+      if (result === Result.SUCCESS)
+        yield put({
+          type: 'savePoliticsRank',
+          payload: reply,
+        })
+    },
+
+    *fetchPublicChoiceRank({payload}, {call, put}) {
+      const {result, reply} = yield call(getCourseRank, payload);
+      if (result === Result.SUCCESS)
+        yield put({
+          type: 'savePublicChoiceRank',
+          payload: reply,
+        })
+    },
+
+    *fetchGeneralElectiveRank({payload}, {call, put}) {
+      const {result, reply} = yield call(getCourseRank, payload);
+      if (result === Result.SUCCESS)
+        yield put({
+          type: 'saveGeneralElectiveRank',
+          payload: reply,
+        })
+    },
   },
 
   reducers: {
@@ -82,6 +118,46 @@ const Model = {
       return {
         ...state,
         latestReviews: newCourseReviews,
+      }
+    },
+
+    saveSpecialityRank(state, {payload}) {
+      return {
+        ...state,
+        specialityRank: {
+          ...state.specialityRank,
+          courses: payload.courses,
+        }
+      }
+    },
+
+    savePoliticsRank(state, {payload}) {
+      return {
+        ...state,
+        politicsRank: {
+          ...state.politicsRank,
+          courses: payload.courses,
+        }
+      }
+    },
+
+    savePublicChoiceRank(state, {payload}) {
+      return {
+        ...state,
+        publicChoiceRank: {
+          ...state.publicChoiceRank,
+          courses: payload.courses,
+        }
+      }
+    },
+
+    saveGeneralElectiveRank(state, {payload}) {
+      return {
+        ...state,
+        generalElectiveRank: {
+          ...state.generalElectiveRank,
+          courses: payload.courses,
+        }
       }
     },
   },

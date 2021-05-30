@@ -53,6 +53,18 @@ const genCoursesBySchool = () => {
   return courses;
 }
 
+const genCourseRank = (size) => {
+  let courses = [];
+  while (size--) {
+    courses.push({
+      id: Random.integer(1, 2000),
+      name: Random.ctitle(),
+      recommend_score: Random.float(0, 4)
+    })
+  }
+  return courses;
+}
+
 export default {
   'POST /api/course/get_course_list': (req, res) => {
     const { page_size, course_type, school_id } = req.body;
@@ -90,6 +102,17 @@ export default {
         exam_score: Random.float(0, 4),
         last_review: randomTimestamp(),
         create_time: randomTimestamp(),
+      }
+    })
+  },
+
+  'POST /api/course/get_course_rank': (req, res) => {
+    let {rank_size} = req.body;
+    if (!rank_size) rank_size = 10;
+    res.send({
+      result: Result.SUCCESS,
+      reply: {
+        courses: genCourseRank(rank_size),
       }
     })
   }
