@@ -1,0 +1,12 @@
+FROM node:10.19.0-alpine
+
+WORKDIR /app
+
+# Copy code
+COPY . dist
+
+# Install serve
+RUN npm install -g serve
+
+CMD serve -s dist -l $PORT
+

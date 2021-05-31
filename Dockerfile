@@ -13,6 +13,8 @@ RUN npm install
 # Build dist
 RUN npm run build
 
+RUN rm -rf node_modules
+
 # Install serve
 RUN npm install -g serve
 

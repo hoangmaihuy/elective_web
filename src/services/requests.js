@@ -7,7 +7,7 @@ const TIMEOUT = 10000;
 
 export async function postTuikeApi(url, data) {
   const token = getToken();
-  let headers = {}
+  const headers = {}
   if (token)
     headers.Authorization = `Bearer ${token}`;
 	console.log("postTuikeApi|url=", url, ",headers=", headers, ",data=", data);
@@ -30,7 +30,7 @@ export async function postTuikeApi(url, data) {
 
 export async function getTuikeApi(url, params) {
   const token = getToken();
-  let headers = {}
+  const headers = {}
   if (token)
     headers.Authorization = `Bearer ${token}`;
   console.log(`getTuikeApi|url=${url}, headers=${headers}, params=${params}`);
