@@ -1,6 +1,7 @@
 import {getLatestReviews, getCourseRank} from "@/pages/Welcome/service";
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import {Result} from "@/services/result";
+import {interactReview} from "@/services/review";
 
 const Model = {
   namespace: 'welcome',
@@ -72,6 +73,15 @@ const Model = {
           payload: reply,
         })
     },
+
+    *interactReview({payload}, { call, put }) {
+      const {reviewId, action} = payload;
+      yield put({
+        type: 'changeReviewInteract',
+        payload,
+      })
+      yield call(interactReview, reviewId, action);
+    }
   },
 
   reducers: {
@@ -97,7 +107,7 @@ const Model = {
 
     changeReviewInteract(state, {payload}) {
       const { reviewId, action} = payload;
-      const newCourseReviews =  state.teacherReviews.map((review) => {
+      const newCourseReviews =  state.latestReviews.map((review) => {
         if (review.id !== reviewId || review.interaction === action)
           return review;
         let newReview = {
