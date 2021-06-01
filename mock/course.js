@@ -3,7 +3,7 @@ import CourseType from "../src/consts/CourseType";
 import {Result} from "../src/services/result";
 
 const TestCourseId = 1;
-const typeIds = Object.keys(CourseType);
+const typeIds = Object.keys(CourseType).map((x) => parseInt(x, 10));
 
 const randomTimestamp = () => new Date(Random.datetime()).getTime();
 

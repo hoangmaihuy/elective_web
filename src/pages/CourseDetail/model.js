@@ -6,6 +6,7 @@ import { getCourseReviews} from './service';
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import {Result} from "@/services/result";
 import {interactReview} from "@/services/review";
+import {getCourseRank} from "@/pages/Welcome/service";
 
 const Model = {
   namespace: 'courseDetail',
@@ -14,6 +15,7 @@ const Model = {
     courseInfo: {},
     teacherList: [],
     courseReviews: [],
+    courseRank: [],
     reviewParams: {
       teacherId: 0,
       semester: 'all',
@@ -35,6 +37,15 @@ const Model = {
           courseInfo: reply,
         },
       });
+    },
+
+    *fetchCourseRank({payload}, {call, put}) {
+      const {result, reply} = yield call(getCourseRank, payload);
+      if (result === Result.SUCCESS)
+        yield put({
+          type: 'saveCourseRank',
+          payload: reply.courses,
+        })
     },
 
     *fetchTeacherList({payload}, {call, put}) {
@@ -72,6 +83,7 @@ const Model = {
         courseInfo: {},
         teacherList: [],
         courseReviews: [],
+        courseRank: [],
         reviewParams: {
           teacherId: 0,
           semester: 'all',
@@ -116,6 +128,10 @@ const Model = {
 
     saveTeacherList(state, {payload}) {
       return {...state, teacherList: payload}
+    },
+
+    saveCourseRank(state, {payload}) {
+      return {...state, courseRank: payload}
     },
 
     saveCourseReviews(state, {payload}) {

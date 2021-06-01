@@ -3,7 +3,7 @@ import {GridContent, PageContainer} from '@ant-design/pro-layout';
 import styles from './style.less';
 import {Card, Col, Row, Select, Button } from "antd";
 import LatestReviews from "@/pages/Welcome/components/LatestReviews";
-import CourseRank from "@/pages/Welcome/components/CourseRank";
+import CourseRank from "@/pages/components/CourseRank";
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import SchoolList from "@/consts/SchoolList";
 import {connect, Link} from "umi";
@@ -199,7 +199,7 @@ const Welcome = (props) => {
           </Col>
           <Col lg={6} md={12} sm={12} xs={24}>
             <CourseRank
-              title={"体育排行"}
+              title={"体育课排行"}
               dataSource={gymRank.courses}
               loading={fetchingGymRank}
             />

@@ -3,21 +3,26 @@ import {Button, Result, Rate, Descriptions, Tooltip } from "antd";
 import Skeleton from '@ant-design/pro-skeleton';
 import {connect, history, useParams} from "umi";
 import { GridContent, PageContainer } from '@ant-design/pro-layout';
-import { Card, Col, Divider, Row } from 'antd';
+import { Card, Col, Divider, Row, Grid} from 'antd';
 import CourseInfo from "@/pages/CourseDetail/components/CourseInfo";
 import TeacherTags from "@/pages/CourseDetail/components/TeacherTags";
 import CourseReviews from "@/pages/CourseDetail/components/CourseReviews";
+import CourseRank from "@/pages/components/CourseRank";
 import ReviewInteraction from "@/consts/ReviewInteraction";
 import {Result as ApiResult} from "@/services/result";
 
+const { useBreakpoint } = Grid;
 
 const CourseDetail = (props) => {
   const { dispatch, pagination } = props;
   const { status, courseInfo, teacherList, courseReviews, reviewParams, userId } = props;
   const { fetchingCourseInfo, fetchingCourseReviews } = props;
+  const { courseRank, fetchingCourseRank } = props;
   const params = useParams();
   const courseId = parseInt(params.courseId, 10);
   const dataLoading = fetchingCourseReviews || fetchingCourseInfo;
+
+  const screens = useBreakpoint();
 
   useEffect(() => {
     if (dispatch) {
@@ -36,6 +41,22 @@ const CourseDetail = (props) => {
       })
     }
   }, [courseId])
+
+  useEffect(() => {
+    if (!courseInfo) return;
+    const payload = {
+      course_type: courseInfo.type,
+      rank_size: 10
+    }
+    if (courseInfo.type === 100) // 专业课
+      payload.school_id = courseInfo.schoolId;
+    if (dispatch) {
+      dispatch({
+        type: 'courseDetail/fetchCourseRank',
+        payload,
+      })
+    }
+  }, [courseInfo])
 
   useEffect(() => {
     if (dispatch) {
@@ -124,16 +145,27 @@ const CourseDetail = (props) => {
         <GridContent>
           <Row gutter={24}>
             <Col lg={7} md={24}>
-              <Card
-                bordered={false}
-                style={{
-                  marginBottom: 24,
-                }}
-              >
-                <CourseInfo data={courseInfo}/>
-                <Divider dashed/>
-                <TeacherTags data={teacherList} checkedId={reviewParams.teacherId} onChange={onTeacherChange}/>
-              </Card>
+              <Row span={24}>
+                <Card
+                  bordered={false}
+                  style={{
+                    marginBottom: 24,
+                  }}
+                >
+                  <CourseInfo data={courseInfo}/>
+                  <Divider dashed/>
+                  <TeacherTags data={teacherList} checkedId={reviewParams.teacherId} onChange={onTeacherChange}/>
+                </Card>
+              </Row>
+              { screens["lg"] &&
+                <Row lg={24}>
+                <CourseRank
+                  title={'类似课程'}
+                  dataSource={courseRank}
+                  loading={fetchingCourseRank}
+                />
+              </Row>
+              }
             </Col>
 
             <Col lg={17} md={24}>
@@ -168,4 +200,6 @@ export default connect(({ loading, courseDetail, user }) => ({
   courseReviews: courseDetail.courseReviews,
   fetchingCourseReviews: loading.effects["courseDetail/fetchCourseReviews"],
   reviewParams: courseDetail.reviewParams,
+  courseRank: courseDetail.courseRank,
+  fetchingCourseRank: loading.effects["courseDetail/fetchCourseRank"],
 }))(CourseDetail);

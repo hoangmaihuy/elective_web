@@ -26,7 +26,7 @@ export default function CourseRank(props) {
     <Card
       title={title}
       size={'small'}
-      style={{marginBottom: '24px'}}
+      style={{marginBottom: '24px', width: '100%'}}
       headStyle={{fontWeight: 'bold'}}
       extra={extra}
     >
