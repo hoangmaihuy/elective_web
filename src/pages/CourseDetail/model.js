@@ -115,6 +115,7 @@ const Model = {
           courseNo: courseInfo.course_no,
           type: courseInfo.type,
           typeName: CourseType[courseInfo.type],
+          schoolId: courseInfo.school_id,
           schoolName: SchoolList[courseInfo.school_id],
           credit: courseInfo.credit,
           reviewCount: courseInfo.review_count,

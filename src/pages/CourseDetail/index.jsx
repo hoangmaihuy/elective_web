@@ -157,7 +157,7 @@ const CourseDetail = (props) => {
                   <TeacherTags data={teacherList} checkedId={reviewParams.teacherId} onChange={onTeacherChange}/>
                 </Card>
               </Row>
-              { screens["lg"] &&
+              { screens.lg &&
                 <Row lg={24}>
                 <CourseRank
                   title={'类似课程'}
