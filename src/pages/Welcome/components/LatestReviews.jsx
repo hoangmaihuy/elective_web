@@ -34,7 +34,7 @@ const LatestReviews = (props) => {
     ]
 
     return (
-      <List.Item actions={actions}>
+      <List.Item actions={actions} className={'latest-reviews'}>
         <List.Item.Meta title={<b>{review.title}</b>} description={reviewMoment}/>
         <Descriptions column={{xs: 1, sm: 4}} labelStyle={{fontWeight: "bold"}}>
           <Descriptions.Item label={"课程名"}>

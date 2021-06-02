@@ -34,7 +34,7 @@ const CourseReviews = (props) => {
     ]
 
     return (
-      <List.Item actions={actions}>
+      <List.Item className={"course-reviews"} actions={actions}>
         <List.Item.Meta title={<b>{review.title}</b>} description={reviewMoment}/>
         <Descriptions column={{xs: 1, sm: 2}} labelStyle={{fontWeight: "bold"}}>
           <Descriptions.Item label={"任课老师"}>
@@ -66,18 +66,20 @@ const CourseReviews = (props) => {
     )
   }
   return (
-    <List
-      dataSource={data}
-      rowKey={"id"}
-      pagination={{
-        size: "small",
-        showSizeChanger: true,
-        onChange: onPaginationChange,
-        ...pagination
-      }}
-      itemLayout={"vertical"}
-      renderItem={renderReview}
-    />
+    <div id={"course-reviews-panel"}>
+      <List
+        dataSource={data}
+        rowKey={"id"}
+        pagination={{
+          size: "small",
+          showSizeChanger: true,
+          onChange: onPaginationChange,
+          ...pagination
+        }}
+        itemLayout={"vertical"}
+        renderItem={renderReview}
+      />
+    </div>
   )
 }
 

@@ -158,13 +158,13 @@ const CourseDetail = (props) => {
                 </Card>
               </Row>
               { screens.lg &&
-                <Row lg={24}>
-                <CourseRank
-                  title={'类似课程'}
-                  dataSource={courseRank}
-                  loading={fetchingCourseRank}
-                />
-              </Row>
+                <Row lg={24} id={"similar-courses-panel"}>
+                  <CourseRank
+                    title={'类似课程'}
+                    dataSource={courseRank}
+                    loading={fetchingCourseRank}
+                  />
+                </Row>
               }
             </Col>
 

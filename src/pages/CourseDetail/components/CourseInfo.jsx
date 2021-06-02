@@ -18,7 +18,7 @@ const CourseInfo = (props) => {
       <div className={styles.avatarHolder}>
         <div className={styles.name}>{data.name}</div>
       </div>
-      <div>
+      <div id="course-info-panel">
         <Descriptions colon={false} labelStyle={rateLabelStyle} column={1}>
           <Descriptions.Item label={"推荐分"}>
             <RecommendRate disabled defaultValue={roundToHalf(data.recommendScore)}/>

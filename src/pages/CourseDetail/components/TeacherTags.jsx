@@ -5,7 +5,7 @@ import React from "react";
 const TeacherTags = (props) => {
   const { data, onChange, checkedId } = props;
   return (
-    <div className={styles.tags}>
+    <div id="teacher-tags" className={styles.tags}>
       <div className={styles.tagsTitle}>任课老师</div>
       {[{id: 0, name: '所有'}].concat(data).map((teacher) => (
         <Tag.CheckableTag
