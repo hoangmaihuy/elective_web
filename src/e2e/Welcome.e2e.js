@@ -1,5 +1,3 @@
-import { waitForText } from "./utils";
-
 const BASE_URL = `http://localhost:${process.env.PORT || 3000}`;
 
 const WaitTime = 500;
