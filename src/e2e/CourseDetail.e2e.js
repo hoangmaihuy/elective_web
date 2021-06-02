@@ -34,7 +34,9 @@ describe('Test CourseDetail page', function () {
   it('should click on like/dislike', async () => {
     // wait for review panel
     await page.waitForSelector(".ant-card-bordered", {visibility: "visible"});
+    await page.waitForSelector(".anticon-like");
     await page.click('.anticon-like');
+    await page.waitForSelector(".anticon-dislike");
     await page.click('.anticon-dislike');
   })
 

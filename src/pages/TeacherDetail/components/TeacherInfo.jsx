@@ -12,7 +12,7 @@ const TeacherInfo = (props) => {
   const {data} = props;
 
   return (
-    <div>
+    <div id={'teacher-info-panel'}>
       <div className={styles.avatarHolder}>
         <div className={styles.name}>{data.name}</div>
       </div>

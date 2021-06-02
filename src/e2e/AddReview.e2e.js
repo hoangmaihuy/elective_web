@@ -14,6 +14,7 @@ beforeEach(async () => {
 describe('Test AddReview page', () => {
   it('should add review successfully', async () => {
     await page.waitForTimeout(WaitTime);
+    await page.waitForSelector('#courseName');
     await page.click("#courseName"); // click to select school
     await page.waitForTimeout(WaitTime);
     await page.click(".ant-select-tree-list-holder-inner > :nth-child(1) [focusable='false']"); // select first school

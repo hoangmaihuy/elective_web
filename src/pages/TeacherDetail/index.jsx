@@ -97,6 +97,7 @@ const TeacherDetail = (props) => {
 
           <Col lg={17} md={24}>
             <Card
+              id={'teacher-reviews-panel'}
               bordered
               title={"教师评测"}
             >
