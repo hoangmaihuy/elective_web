@@ -63,7 +63,7 @@ const CourseInfoForm = (props) => {
     }
   }, [props.data.courseId])
 
-  const onCourseChange = () => {
+  const onCourseSelect = () => {
     const selectedCourseName = getFieldValue("courseName");
     const [courseId, courseName] = parseSelectValue(selectedCourseName);
     resetFields(["teacherName"]);
@@ -113,9 +113,10 @@ const CourseInfoForm = (props) => {
       <TreeSelect
         showSearch
         placeholder="请选择课程"
-        onSelect={onCourseChange}
+        onSelect={onCourseSelect}
         onSearch={onCourseSearch}
         loading={fetchingCourses}
+        filterTreeNode={false}
         treeDefaultExpandAll
       >
         {treeNodes}
