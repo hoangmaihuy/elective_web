@@ -14,6 +14,12 @@ export async function getCoursesBySchool() {
   return getTuikeApi(TuikeCourseApi.GET_COURSES_BY_SCHOOL, {})
 }
 
+export async function searchCoursesByName(courseName) {
+  return postTuikeApi(TuikeCourseApi.SEARCH_COURSES_BY_NAME, {
+    course_name: courseName,
+  })
+}
+
 export async function getTeacherList() {
   return getTuikeApi(TuikeTeacherApi.GET_TEACHER_LIST);
 }

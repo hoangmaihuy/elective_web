@@ -8,7 +8,8 @@
 export default {
   dev: {
     '/api/': {
-      target: 'https://tuike-api-test.herokuapp.com',
+      //target: 'https://tuike-api-test.herokuapp.com',
+      target: 'http://localhost:8000',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',

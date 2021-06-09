@@ -1,11 +1,11 @@
-import { addReview, getCoursesBySchool, getTeachersByCourse } from './service';
+import { addReview, getCoursesBySchool, getTeachersByCourse, searchCoursesByName } from './service';
 import {Result} from "@/services/result";
 
 const Model = {
   namespace: 'addReviewForm',
   state: {
     current: 'courseInfo',
-    hasCourseList: false,
+    searchCourseName: undefined,
     courseList: [],
     hasTeacherList: false,
     teacherList: [],
@@ -15,6 +15,27 @@ const Model = {
   effects: {
     *fetchCourseList({payload}, {call, put}) {
       const {result, reply} = yield call(getCoursesBySchool)
+      if (result === Result.SUCCESS) {
+        yield put({
+          type: 'saveCourseList',
+          payload: reply,
+        })
+      }
+    },
+
+    *fetchCourseListByName({payload}, {call, put, select}) {
+      const currentSearchName = yield select(state => state.addReviewForm.searchCourseName);
+      console.log("fetchCourseListByname", currentSearchName, payload);
+      if (payload !== currentSearchName)
+        return;
+      if (!payload) {
+        yield put({
+          type: 'saveCourseList',
+          payload: [],
+        })
+        return;
+      }
+      const { result, reply } = yield call(searchCoursesByName, payload)
       if (result === Result.SUCCESS) {
         yield put({
           type: 'saveCourseList',
@@ -82,11 +103,15 @@ const Model = {
     },
 
     saveCourseList(state, { payload }) {
-      return {...state, courseList: payload, hasCourseList: true}
+      return {...state, courseList: payload}
     },
 
     saveTeacherList(state, {payload}) {
       return {...state, teacherList: payload, hasTeacherList: true}
+    },
+
+    saveSearchCourseName(state, {payload}) {
+      return {...state, searchCourseName: payload}
     }
   },
 };

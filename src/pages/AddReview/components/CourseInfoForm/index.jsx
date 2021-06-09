@@ -16,6 +16,8 @@ const formItemLayout = {
 };
 
 const parseSelectValue = (selectString) => {
+  if (!selectString)
+    return undefined, undefined
   const s = selectString.split("_");
   const id = parseInt(s[0], 10);
   const name = s[1];
@@ -23,19 +25,30 @@ const parseSelectValue = (selectString) => {
 }
 
 const CourseInfoForm = (props) => {
-  const { dispatch, data, courseList, teacherList, fetchingCourses, fetchingTeachers } = props;
+  const { dispatch, data, courseList, teacherList, fetchingCourses, fetchingTeachers, searchCourseName } = props;
   const [form] = Form.useForm();
   const { validateFields, getFieldValue, resetFields } = form;
 
-  useEffect(() => {
-    if (props.hasCourseList)
-      return;
-    if (dispatch) {
-      dispatch({
-        type: 'addReviewForm/fetchCourseList'
-      });
-    }
-  }, [props.hasCourseList])
+  // useEffect(() => {
+  //   if (props.hasCourseList)
+  //     return;
+  //   if (dispatch) {
+  //     dispatch({
+  //       type: 'addReviewForm/fetchCourseList'
+  //     });
+  //   }
+  // }, [props.hasCourseList])
+
+  useEffect(async () => {
+    await setTimeout(() => {
+      if (dispatch) {
+        dispatch({
+          type: 'addReviewForm/fetchCourseListByName',
+          payload: searchCourseName,
+        });
+      }
+    }, 500)
+  }, [searchCourseName])
 
   useEffect(() => {
     const {courseId} = props.data;
@@ -67,6 +80,15 @@ const CourseInfoForm = (props) => {
     }
   }
 
+  const onCourseSearch = (input) => {
+    if (dispatch) {
+      dispatch({
+        type: 'addReviewForm/saveSearchCourseName',
+        payload: input
+      })
+    }
+  }
+
   const renderCourseSelect = () => {
     const treeNodes = [];
     for (const schoolId in courseList) {
@@ -74,23 +96,32 @@ const CourseInfoForm = (props) => {
       const courses = courseList[schoolId];
       treeNodes.push(
         <TreeNode key={`school_${schoolId}`} selectable={false} title={schoolName}>
-          {courses.map((course) => (
-            <TreeNode
-              value={`${course.id}_${course.name}`}
-              isLeaf={true}
-              title={`${course.name} （${course.credit} 学分）`}
-            >
-            </TreeNode>
-          ))}
+          {courses.map((course) => {
+            return(
+              <TreeNode
+                value={`${course.id}_${course.name}`}
+                isLeaf={true}
+                title={`${course.name} （${course.credit} 学分）`}
+              >
+              </TreeNode>
+            )
+          })}
         </TreeNode>
       )
     }
     return (
-      <TreeSelect showSearch allowClear placeholder="请选择课程" onChange={onCourseChange} loading={fetchingCourses}>
+      <TreeSelect
+        showSearch
+        placeholder="请选择课程"
+        onSelect={onCourseChange}
+        onSearch={onCourseSearch}
+        loading={fetchingCourses}
+        treeDefaultExpandAll
+      >
         {treeNodes}
       </TreeSelect>
     );
-  }
+  };
 
   const renderTeacherSelect = () => {
     return (
@@ -219,7 +250,8 @@ export default connect(({ addReviewForm, loading }) => ({
   data: addReviewForm.formData,
   hasCourseList: addReviewForm.hasCourseList,
   courseList: addReviewForm.courseList,
-  fetchingCourses: loading.effects['addReviewForm/fetchCourseList'],
+  searchCourseName: addReviewForm.searchCourseName,
+  fetchingCourses: loading.effects['addReviewForm/fetchCourseListByName'],
   hasTeacherList: addReviewForm.hasTeacherList,
   teacherList: addReviewForm.teacherList,
   fetchingTeachers: loading.effects['addReviewForm/fetchTeacherList'],
