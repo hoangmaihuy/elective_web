@@ -38,7 +38,7 @@ const menuDataRender = (menuList) =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright={`2021 北京大学软件工程课程项目`}
+    copyright={`2021 北京大学《推课网》`}
     links={[
       {
         key: 'github',
